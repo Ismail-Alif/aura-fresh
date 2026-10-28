@@ -1,101 +1,117 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
+import { SITE_CONFIG, ProductPackage, OrderDetails } from "@/config/site";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { ScienceExplainer } from "@/components/ScienceExplainer";
+import { ProblemSolutions } from "@/components/ProblemSolutions";
+import { RoomAdvisor } from "@/components/RoomAdvisor";
+import { ProductCard } from "@/components/ProductCard";
+import { CheckoutForm } from "@/components/CheckoutForm";
+import { Reviews } from "@/components/Reviews";
+import { FAQ } from "@/components/FAQ";
+import { Footer } from "@/components/Footer";
+import { OrderSuccessModal } from "@/components/OrderSuccessModal";
+import { Tag } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  // Default selected package: Pro Multi-Room (500g)
+  const [selectedPackage, setSelectedPackage] = useState<ProductPackage>(SITE_CONFIG.products[1]);
+  const [placedOrder, setPlacedOrder] = useState<OrderDetails | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const scrollToCheckout = () => {
+    const el = document.getElementById("checkout");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToScience = () => {
+    const el = document.getElementById("science");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleSelectPackage = (pkg: ProductPackage) => {
+    setSelectedPackage(pkg);
+    scrollToCheckout();
+  };
+
+  return (
+    <main className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-500 selection:text-white">
+      {/* Navigation */}
+      <Navbar onOrderClick={scrollToCheckout} />
+
+      {/* Hero Section */}
+      <Hero
+        onOrderClick={scrollToCheckout}
+        onExploreScience={scrollToScience}
+      />
+
+      {/* 4 Major Problems & Solutions */}
+      <ProblemSolutions onOrderClick={scrollToCheckout} />
+
+      {/* The Science & Chemistry Behind the Dual Media */}
+      <ScienceExplainer />
+
+      {/* Room Advisor / Calculator */}
+      <RoomAdvisor onSelectPackage={handleSelectPackage} />
+
+      {/* Packages & Pricing Section */}
+      <section id="pricing" className="py-16 sm:py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold px-3 py-1 rounded-full">
+              <Tag className="w-4 h-4 text-emerald-600" />
+              <span>সীমিত সময়ের বিশেষ অফার</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              আপনার পছন্দের প্যাকেজটি বেছে নিন
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm">
+              যেকোনো প্যাকেজ সিলেক্ট করে নিচে সরাসরি ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            {SITE_CONFIG.products.map((pkg) => (
+              <ProductCard
+                key={pkg.id}
+                pkg={pkg}
+                isSelected={selectedPackage.id === pkg.id}
+                onSelect={handleSelectPackage}
+              />
+            ))}
+          </div>
+
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Checkout Form Section */}
+      <CheckoutForm
+        selectedPackage={selectedPackage}
+        onOrderSuccess={(details) => setPlacedOrder(details)}
+      />
+
+      {/* Customer Reviews */}
+      <Reviews />
+
+      {/* FAQ Accordion */}
+      <FAQ />
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Order Success Confirmation Modal */}
+      {placedOrder && (
+        <OrderSuccessModal
+          orderDetails={placedOrder}
+          onClose={() => setPlacedOrder(null)}
+        />
+      )}
+    </main>
   );
 }
