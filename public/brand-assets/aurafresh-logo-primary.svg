@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="auraShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="auraGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+
+  <!-- Aura Shield Symbol -->
+  <g transform="translate(10, 8)">
+    <!-- Outer Aura Ring with Organic Break -->
+    <circle cx="42" cy="42" r="38" fill="none" stroke="url(#auraShieldGrad)" stroke-width="5" stroke-dasharray="190 40" stroke-linecap="round"/>
+    <!-- Subtle Inner Resonance Ring -->
+    <circle cx="42" cy="42" r="28" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.45" stroke-dasharray="8 6"/>
+    
+    <!-- Central Shield Leaf (Protection & Nature) -->
+    <path d="M 42 20 C 55 32, 57 50, 42 62 C 27 50, 29 32, 42 20 Z" fill="url(#auraShieldGrad)"/>
+    <!-- Central Life Spine -->
+    <path d="M 42 28 L 42 56" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 42 38 L 48 34" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 42 44 L 36 40" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Protective Glow Sparkle -->
+    <circle cx="68" cy="18" r="3.5" fill="#10b981" />
+    <circle cx="16" cy="66" r="2.5" fill="#34d399" />
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="110" y="58" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-weight="900" font-size="42" fill="#0f172a" letter-spacing="-1">Aura<tspan fill="#059669">Fresh</tspan></text>
+  <text x="112" y="80" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="11.5" fill="#64748b" letter-spacing="3.5">LIVING WELLNESS &amp; PROTECTION</text>
+
+  <!-- Bio-Safe Pill Badge -->
+  <rect x="355" y="32" width="86" height="22" rx="6" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
+  <text x="367" y="47" font-family="system-ui, sans-serif" font-weight="800" font-size="10" fill="#047857" letter-spacing="1">BIO-SAFE</text>
+</svg>

@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     locale: "bn_BD",
     type: "website",
   },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/brand-assets/aurafresh-facebook-avatar.svg",
+  },
 };
 
 export default function RootLayout({

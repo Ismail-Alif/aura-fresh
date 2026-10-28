@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 624" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="coverBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" />
+      <stop offset="40%" stop-color="#064e3b" />
+      <stop offset="85%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Aura Glow Gradient -->
+    <linearGradient id="coverShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="ambientGlow" cx="75%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#059669" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1640" height="624" fill="url(#coverBg)" />
+
+  <!-- Ambient Light Sphere on Right Side -->
+  <rect width="1640" height="624" fill="url(#ambientGlow)" />
+
+  <!-- Decorative Minimalist Contour Rings (Abstract Aura Atmosphere) -->
+  <g opacity="0.15" stroke="#34d399" fill="none">
+    <circle cx="1250" cy="312" r="280" stroke-width="1.5" stroke-dasharray="12 8" />
+    <circle cx="1250" cy="312" r="210" stroke-width="2" />
+    <circle cx="1250" cy="312" r="140" stroke-width="1.5" stroke-dasharray="6 6" />
+    <circle cx="1250" cy="312" r="70" stroke-width="2" />
+  </g>
+
+  <!-- Left Content Group (Mobile Safe Area) -->
+  <g transform="translate(140, 160)">
+    
+    <!-- Top Minimal Tag -->
+    <rect x="0" y="0" width="230" height="34" rx="17" fill="#042f2e" stroke="#10b981" stroke-width="1.5" opacity="0.9" />
+    <text x="24" y="22" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="15" fill="#34d399">
+      🌿 প্রাকৃতিক সুরক্ষা ও সতেজতা
+    </text>
+
+    <!-- Main Brand Name -->
+    <text x="0" y="105" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="78" fill="#ffffff" letter-spacing="-1.5">
+      Aura<tspan fill="#34d399">Fresh</tspan>
+    </text>
+
+    <!-- Bengali Tagline -->
+    <text x="2" y="165" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="28" fill="#e2e8f0" letter-spacing="0.5">
+      আপনার ঘরের বিশুদ্ধ ও সুরক্ষিত আবাসন
+    </text>
+
+    <!-- 3 Minimal Value Pillars -->
+    <g transform="translate(2, 215)">
+      <!-- Pillar 1 -->
+      <rect x="0" y="0" width="160" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="18" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+        ✔ ১০০% বায়ো-সেফ
+      </text>
+
+      <!-- Pillar 2 -->
+      <rect x="175" y="0" width="180" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="193" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+        ✔ কেমিক্যালমুক্ত সুরক্ষা
+      </text>
+
+      <!-- Pillar 3 -->
+      <rect x="370" y="0" width="170" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="388" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+        ✔ দীর্ঘস্থায়ী সতেজতা
+      </text>
+    </g>
+
+    <!-- Website URL -->
+    <text x="4" y="295" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="16" fill="#64748b" letter-spacing="2">
+      WWW.AURAFRESHBD.COM
+    </text>
+  </g>
+
+  <!-- Right Visual Symbol Representation (Clean, Elegant, Large Aura Shield Mark) -->
+  <g transform="translate(1250, 312) scale(3.2)">
+    <!-- Outer Aura Ring -->
+    <circle cx="0" cy="0" r="42" fill="none" stroke="url(#coverShieldGrad)" stroke-width="4.5" stroke-dasharray="200 45" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="32" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.4" stroke-dasharray="8 6"/>
+    
+    <!-- Central Shield Leaf -->
+    <path d="M 0 -24 C 14 -12, 16 8, 0 22 C -16 8, -14 -12, 0 -24 Z" fill="url(#coverShieldGrad)"/>
+    <path d="M 0 -16 L 0 16" stroke="#022c22" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 0 -4 L 7 -9" stroke="#022c22" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 0 3 L -7 -2" stroke="#022c22" stroke-width="2" stroke-linecap="round"/>
+    
+    <circle cx="28" cy="-28" r="3" fill="#34d399" />
+    <circle cx="-28" cy="24" r="2.2" fill="#6ee7b7" />
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sealBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="sealShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Outer Badge -->
+  <circle cx="250" cy="250" r="238" fill="url(#sealBgGrad)" stroke="#10b981" stroke-width="7" />
+  <circle cx="250" cy="250" r="222" fill="none" stroke="#34d399" stroke-width="2" stroke-dasharray="10 8" opacity="0.6"/>
+
+  <!-- Top Curved Path Text: "100% NATURAL • BIO-SAFE FORMULA" -->
+  <path id="topCurve" d="M 90 250 A 160 160 0 0 1 410 250" fill="none" />
+  <text font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="16.5" fill="#a7f3d0" letter-spacing="4">
+    <textPath href="#topCurve" startOffset="50%" text-anchor="middle">
+      100% NATURAL • BIO-SAFE
+    </textPath>
+  </text>
+
+  <!-- Aura Shield Symbol Center -->
+  <g transform="translate(250, 235) scale(2.2)">
+    <circle cx="0" cy="0" r="38" fill="none" stroke="url(#sealShieldGrad)" stroke-width="4.5" stroke-dasharray="180 35" stroke-linecap="round"/>
+    <path d="M 0 -22 C 12 -11, 14 7, 0 20 C -14 7, -12 -11, 0 -22 Z" fill="url(#sealShieldGrad)"/>
+    <path d="M 0 -14 L 0 14" stroke="#022c22" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M 0 -3 L 6 -7" stroke="#022c22" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 0 3 L -6 -1" stroke="#022c22" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Brand Name Typography -->
+  <text x="250" y="375" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="44" fill="#ffffff" letter-spacing="-1">
+    Aura<tspan fill="#34d399">Fresh</tspan>
+  </text>
+
+  <!-- Bottom Curved Path Text: "LIVING WELLNESS &amp; PROTECTION" -->
+  <path id="bottomCurve" d="M 410 250 A 160 160 0 0 1 90 250" fill="none" />
+  <text font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="14.5" fill="#6ee7b7" letter-spacing="3.5">
+    <textPath href="#bottomCurve" startOffset="50%" text-anchor="middle">
+      LIVING WELLNESS &amp; PROTECTION
+    </textPath>
+  </text>
+</svg>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Wind, Phone, MessageCircle, ShieldCheck } from "lucide-react";
+import { Phone, MessageCircle, ShieldCheck } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
 
 export const Footer: React.FC = () => {
@@ -13,16 +13,19 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold">
-                <Wind className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-2xl bg-emerald-950 border border-emerald-500/50 flex items-center justify-center p-1.5 shadow-md">
+                <svg viewBox="0 0 84 84" className="w-full h-full">
+                  <circle cx="42" cy="42" r="36" fill="none" stroke="#10b981" strokeWidth="5.5" strokeDasharray="180 35" strokeLinecap="round"/>
+                  <path d="M 42 20 C 54 32, 56 48, 42 60 C 28 48, 30 32, 42 20 Z" fill="#10b981"/>
+                  <path d="M 42 27 L 42 54" stroke="#022c22" strokeWidth="2.8" strokeLinecap="round"/>
+                </svg>
               </div>
-              <span className="text-xl font-black text-white">
-                {SITE_CONFIG.brandName.slice(0, 4)}
-                <span className="text-emerald-500">{SITE_CONFIG.brandName.slice(4)}</span>
+              <span className="text-xl font-black text-white font-sans">
+                Aura<span className="text-emerald-400">Fresh</span>
               </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-              উন্নত অ্যাক্টিভেটেড কার্বন ও পটাশিয়াম পারম্যাঙ্গানেটের পেটেন্টেড ডুয়াল-অ্যাকশন প্রযুক্তির পরিবেশবান্ধব ও স্বাস্থ্যকর দুর্গন্ধ শোষক। ঘরের বাতাস রাখুন প্রাকৃতিকভাবে নিরাপদ ও ফ্রেশ।
+              উন্নত বায়ো-সেফ প্রযুক্তির পরিবেশবান্ধব ও স্বাস্থ্যকর প্রাকৃতিক সুরক্ষা সমাধান। আপনার পুরো বাড়ি ও পরিবারকে রাখুন সবসময় ফ্রেশ, নিরাপদ ও সুরক্ষিত।
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
               <ShieldCheck className="w-4 h-4" />

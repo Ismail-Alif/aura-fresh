@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Wind, ShoppingBag, ShieldCheck, PhoneCall, Menu, X } from "lucide-react";
+import { ShoppingBag, ShieldCheck, PhoneCall, Menu, X } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
 
 interface NavbarProps {
@@ -33,21 +33,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
           onClick={() => scrollTo("hero")} 
           className="flex items-center gap-2.5 cursor-pointer group"
         >
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform relative">
-            <Wind className="w-5 h-5 sm:w-6 sm:h-6" />
-            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-purple-600 border-2 border-white"></span>
+          {/* Concept 01 Aura Shield Icon */}
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-emerald-950 border border-emerald-500/50 flex items-center justify-center p-1.5 shadow-md shadow-emerald-600/15 group-hover:scale-105 transition-transform">
+            <svg viewBox="0 0 84 84" className="w-full h-full">
+              <circle cx="42" cy="42" r="36" fill="none" stroke="#10b981" strokeWidth="5.5" strokeDasharray="180 35" strokeLinecap="round"/>
+              <circle cx="42" cy="42" r="26" fill="none" stroke="#34d399" strokeWidth="1.8" opacity="0.4" strokeDasharray="6 5"/>
+              <path d="M 42 20 C 54 32, 56 48, 42 60 C 28 48, 30 32, 42 20 Z" fill="#10b981"/>
+              <path d="M 42 27 L 42 54" stroke="#022c22" strokeWidth="2.8" strokeLinecap="round"/>
+              <circle cx="66" cy="20" r="3" fill="#34d399"/>
+            </svg>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 font-sans">
                 Aura<span className="text-emerald-600">Fresh</span>
               </span>
               <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
-                BIO-CHEM
+                BIO-SAFE
               </span>
             </div>
             <p className="text-[11px] text-slate-500 font-medium hidden sm:block -mt-0.5">
-              ন্যাচারাল দুর্গন্ধ শোষক ও পিউরিফায়ার
+              প্রাকৃতিক সুরক্ষা ও সতেজতা
             </p>
           </div>
         </div>

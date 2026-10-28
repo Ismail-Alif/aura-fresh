@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" />
+      <stop offset="50%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#042f2e" />
+    </linearGradient>
+    
+    <!-- Shield Gradient -->
+    <linearGradient id="avatarShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
+    <filter id="auraGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="25" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Solid Rich Dark Background -->
+  <rect width="800" height="800" fill="url(#bgGrad)" />
+
+  <!-- Ambient Glow Behind Symbol -->
+  <circle cx="400" cy="360" r="240" fill="#10b981" opacity="0.18" filter="url(#auraGlow)" />
+
+  <!-- Symbol Group -->
+  <g transform="translate(400, 350) scale(4.4)">
+    <!-- Outer Aura Ring with Dash Break -->
+    <circle cx="0" cy="0" r="42" fill="none" stroke="url(#avatarShieldGrad)" stroke-width="5" stroke-dasharray="210 40" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="32" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.4" stroke-dasharray="8 6"/>
+    
+    <!-- Central Shield Leaf (Protection & Nature) -->
+    <path d="M 0 -24 C 14 -12, 16 8, 0 22 C -16 8, -14 -12, 0 -24 Z" fill="url(#avatarShieldGrad)"/>
+    <!-- Central Spine & Veins -->
+    <path d="M 0 -16 L 0 16" stroke="#022c22" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 0 -4 L 7 -9" stroke="#022c22" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M 0 3 L -7 -2" stroke="#022c22" stroke-width="2.2" stroke-linecap="round"/>
+    
+    <!-- Sparkles -->
+    <circle cx="28" cy="-28" r="3.5" fill="#34d399" />
+    <circle cx="-28" cy="24" r="2.5" fill="#6ee7b7" />
+  </g>
+
+  <!-- Typography underneath for High Brand Recall -->
+  <text x="400" y="640" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="64" fill="#ffffff" letter-spacing="-1">
+    Aura<tspan fill="#34d399">Fresh</tspan>
+  </text>
+  
+  <text x="400" y="682" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="20" fill="#94a3b8" letter-spacing="6">
+    LIVING WELLNESS
+  </text>
+</svg>
