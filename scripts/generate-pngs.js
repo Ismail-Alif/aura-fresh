@@ -13,6 +13,12 @@ const conversions = [
     height: 800,
   },
   {
+    input: "aurafresh-symbol-mark.svg",
+    output: "aurafresh-symbol-mark.png",
+    width: 1000,
+    height: 1000,
+  },
+  {
     input: "aurafresh-facebook-cover.svg",
     output: "aurafresh-facebook-cover.png",
     width: 1640,

@@ -8,7 +8,8 @@ This folder contains the official vector branding assets for **AuraFresh (অর
 
 | File Name (SVG & PNG) | Dimensions | Purpose & Recommended Usage |
 | :--- | :--- | :--- |
-| `aurafresh-facebook-avatar.png` / `.svg` | 800 x 800 px | **Facebook, Instagram, WhatsApp Profile Picture** (Directly uploadable PNG). |
+| `aurafresh-facebook-avatar.png` / `.svg` | 800 x 800 px | **Facebook, Instagram, WhatsApp Profile Picture** (Clean text-free circular icon, directly uploadable PNG). |
+| `aurafresh-symbol-mark.png` / `.svg` | 1000 x 1000 px | **Standalone Symbol Icon (Transparent)** for Watermarks, App Icon, and Stickers. |
 | `aurafresh-facebook-cover.png` / `.svg` | 1640 x 624 px | **Facebook Page Cover Photo** (Retina resolution, mobile & desktop safe PNG). |
 | `aurafresh-logo-primary.png` / `.svg` | 1380 x 300 px | **Primary Horizontal Logo (Transparent)** for Website, Documents, and Prints. |
 | `aurafresh-logo-dark.png` / `.svg` | 1380 x 300 px | **Dark Mode Horizontal Logo (Transparent)** for dark packaging & headers. |
