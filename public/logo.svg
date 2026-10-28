@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#0d9488" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="100%" stop-color="#7e22ce" />
+    </linearGradient>
+  </defs>
+
+  <!-- Logo Icon Container -->
+  <g transform="translate(15, 10)">
+    <!-- Rounded Shield Background -->
+    <rect width="80" height="80" rx="24" fill="url(#primaryGrad)" />
+    
+    <!-- Wind Flow Waves (White) -->
+    <path d="M 22 34 C 32 34, 46 34, 52 30 C 56 27, 56 22, 51 21 C 46 20, 43 25, 45 28" 
+          fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          
+    <path d="M 18 46 C 30 46, 54 46, 62 42 C 67 39, 67 33, 61 31 C 55 29, 52 35, 54 39" 
+          fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          
+    <path d="M 24 58 C 34 58, 48 58, 54 55 C 58 53, 58 48, 53 47" 
+          fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Purple Bio-Active Particle Dot (representing KMnO4) -->
+    <circle cx="62" cy="62" r="7" fill="url(#purpleGrad)" stroke="#ffffff" stroke-width="2.5" />
+  </g>
+
+  <!-- Brand Typography -->
+  <!-- Aura -->
+  <text x="112" y="58" font-family="'SolaimanLipi', 'Hind Siliguri', 'Segoe UI', system-ui, sans-serif" font-weight="900" font-size="44" fill="#0f172a" letter-spacing="-1">Aura</text>
+  <!-- Fresh -->
+  <text x="210" y="58" font-family="'SolaimanLipi', 'Hind Siliguri', 'Segoe UI', system-ui, sans-serif" font-weight="900" font-size="44" fill="#059669" letter-spacing="-1">Fresh</text>
+  
+  <!-- Slogan / Sub-heading -->
+  <text x="114" y="80" font-family="'SolaimanLipi', 'Hind Siliguri', 'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="13" fill="#64748b" letter-spacing="1.5">NATURAL AIR PURIFIER</text>
+  
+  <!-- Bio-Chem Pill Badge -->
+  <rect x="300" y="30" width="82" height="22" rx="6" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
+  <text x="312" y="45" font-family="system-ui, sans-serif" font-weight="800" font-size="10" fill="#047857" letter-spacing="1">BIO-CHEM</text>
+</svg>

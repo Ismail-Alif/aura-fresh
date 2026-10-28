@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProductPackage, SITE_CONFIG, OrderDetails } from "@/config/site";
 import { ShoppingCart, MessageCircle, AlertCircle, Sparkles } from "lucide-react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 interface CheckoutFormProps {
   selectedPackage: ProductPackage;
@@ -19,6 +20,21 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
   const [bkashTrxId, setBkashTrxId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Track InitiateCheckout when component loads or package changes
+  useEffect(() => {
+    trackMetaEvent({
+      eventName: "InitiateCheckout",
+      eventData: {
+        value: selectedPackage.price,
+        currency: "BDT",
+        content_name: selectedPackage.bnTitle,
+        content_ids: [selectedPackage.id],
+        content_type: "product",
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPackage.id]);
 
   // Calculate pricing
   const subtotal = selectedPackage.price * quantity;
@@ -81,10 +97,52 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
         throw new Error("Failed to save order");
       }
 
+      // Fire Meta Pixel & CAPI Purchase Event with deduplication
+      trackMetaEvent({
+        eventName: "Purchase",
+        eventData: {
+          value: grandTotal,
+          currency: "BDT",
+          content_name: selectedPackage.bnTitle,
+          content_ids: [selectedPackage.id],
+          content_type: "product",
+          num_items: quantity,
+        },
+        userData: {
+          name: customerName,
+          phone: customerPhone,
+          address: {
+            city: deliveryArea === "insideDhaka" ? "Dhaka" : "Outside Dhaka",
+            country: "bd",
+          },
+        },
+      });
+
       onOrderSuccess(orderPayload);
     } catch (err) {
       console.error("Order submit error:", err);
       // Fallback: still treat as success locally so customer is not blocked
+      // Fire Meta Pixel & CAPI Purchase Event with deduplication
+      trackMetaEvent({
+        eventName: "Purchase",
+        eventData: {
+          value: grandTotal,
+          currency: "BDT",
+          content_name: selectedPackage.bnTitle,
+          content_ids: [selectedPackage.id],
+          content_type: "product",
+          num_items: quantity,
+        },
+        userData: {
+          name: customerName,
+          phone: customerPhone,
+          address: {
+            city: deliveryArea === "insideDhaka" ? "Dhaka" : "Outside Dhaka",
+            country: "bd",
+          },
+        },
+      });
+
       onOrderSuccess(orderPayload);
     } finally {
       setIsSubmitting(false);

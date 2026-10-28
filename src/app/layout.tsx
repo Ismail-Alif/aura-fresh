@@ -1,19 +1,7 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_CONFIG } from "@/config/site";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { MetaPixelTracker } from "@/components/MetaPixelTracker";
 
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.brandName} (${SITE_CONFIG.brandNameBn}) | ১০০% প্রাকৃতিক দুর্গন্ধ শোষক ও এয়ার পিউরিফায়ার`,
@@ -43,9 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 text-slate-900`}
-      >
+      <body className="antialiased bg-slate-50 text-slate-900 font-sans">
+        <MetaPixelTracker />
         {children}
       </body>
     </html>

@@ -33,21 +33,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
           onClick={() => scrollTo("hero")} 
           className="flex items-center gap-2.5 cursor-pointer group"
         >
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform relative">
             <Wind className="w-5 h-5 sm:w-6 sm:h-6" />
+            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-purple-600 border-2 border-white"></span>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
-                {SITE_CONFIG.brandName.slice(0, 4)}
-                <span className="text-emerald-600">{SITE_CONFIG.brandName.slice(4)}</span>
+                Aura<span className="text-emerald-600">Fresh</span>
               </span>
               <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
                 BIO-CHEM
               </span>
             </div>
             <p className="text-[11px] text-slate-500 font-medium hidden sm:block -mt-0.5">
-              গন্ধ শোষক ও ন্যাচারাল পিউরিফায়ার
+              ন্যাচারাল দুর্গন্ধ শোষক ও পিউরিফায়ার
             </p>
           </div>
         </div>

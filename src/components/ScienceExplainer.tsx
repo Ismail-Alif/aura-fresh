@@ -85,7 +85,7 @@ export const ScienceExplainer: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 3: AeroCure Bio-Chem Formula */}
+          {/* Card 3: AuraFresh Bio-Chem Formula */}
           <div className="bg-gradient-to-b from-emerald-900 to-slate-900 border-2 border-emerald-500 rounded-3xl p-6 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-emerald-500 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl tracking-wider">
               গোল্ড স্ট্যান্ডার্ড

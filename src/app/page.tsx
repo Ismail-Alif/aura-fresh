@@ -13,6 +13,7 @@ import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { OrderSuccessModal } from "@/components/OrderSuccessModal";
+import { MobileBottomBar } from "@/components/MobileBottomBar";
 import { Tag } from "lucide-react";
 
 export default function Home() {
@@ -104,6 +105,9 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Sticky Mobile Bottom Bar */}
+      <MobileBottomBar onOrderClick={scrollToCheckout} />
 
       {/* Order Success Confirmation Modal */}
       {placedOrder && (

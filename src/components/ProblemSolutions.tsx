@@ -88,7 +88,7 @@ export const ProblemSolutions: React.FC<ProblemSolutionsProps> = ({ onOrderClick
                     </div>
                     <div className="text-xs text-emerald-800 bg-emerald-50 border border-emerald-100 p-3 rounded-xl flex items-start gap-1.5">
                       <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span><b className="text-emerald-900">✔ AeroCure সমাধান:</b> {item.solution}</span>
+                      <span><b className="text-emerald-900">✔ AuraFresh সমাধান:</b> {item.solution}</span>
                     </div>
                   </div>
                 </div>
