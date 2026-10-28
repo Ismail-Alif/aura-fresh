@@ -6,13 +6,13 @@ This folder contains the official vector branding assets for **AuraFresh (অর
 
 ## 📁 Asset Directory
 
-| File Name | Dimensions | Purpose & Recommended Usage |
+| File Name (SVG & PNG) | Dimensions | Purpose & Recommended Usage |
 | :--- | :--- | :--- |
-| `aurafresh-logo-primary.svg` | 460 x 100 | **Primary Horizontal Logo** for Website Header, Invoices, Delivery Slips, and Light Paper Bags. |
-| `aurafresh-logo-dark.svg` | 460 x 100 | **Dark Mode Logo** for Black/Emerald Packaging Boxes and Dark Website Headers. |
-| `aurafresh-facebook-avatar.svg` | 800 x 800 (1:1) | **Square & Circular Profile Picture** for Facebook Page, Instagram, and WhatsApp Business Profile. |
-| `aurafresh-facebook-cover.svg` | 1640 x 624 (Retina) | **Official Facebook Page Cover Photo** (Mobile & Desktop Safe, Minimalist & Clutter-Free). |
-| `aurafresh-product-seal.svg` | 500 x 500 (Round) | **Round Product Packaging Seal Sticker** for 100g / 500g pouches and container boxes. |
+| `aurafresh-facebook-avatar.png` / `.svg` | 800 x 800 px | **Facebook, Instagram, WhatsApp Profile Picture** (Directly uploadable PNG). |
+| `aurafresh-facebook-cover.png` / `.svg` | 1640 x 624 px | **Facebook Page Cover Photo** (Retina resolution, mobile & desktop safe PNG). |
+| `aurafresh-logo-primary.png` / `.svg` | 1380 x 300 px | **Primary Horizontal Logo (Transparent)** for Website, Documents, and Prints. |
+| `aurafresh-logo-dark.png` / `.svg` | 1380 x 300 px | **Dark Mode Horizontal Logo (Transparent)** for dark packaging & headers. |
+| `aurafresh-product-seal.png` / `.svg` | 1000 x 1000 px | **Round Product Packaging Seal Sticker** for pouches and boxes. |
 
 ---
 
