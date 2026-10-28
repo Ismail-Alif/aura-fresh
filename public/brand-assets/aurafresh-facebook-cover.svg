@@ -38,49 +38,44 @@
   </g>
 
   <!-- Left Content Group (Mobile Safe Area) -->
-  <g transform="translate(140, 160)">
+  <g transform="translate(140, 175)">
     
-    <!-- Top Minimal Tag -->
-    <rect x="0" y="0" width="230" height="34" rx="17" fill="#042f2e" stroke="#10b981" stroke-width="1.5" opacity="0.9" />
-    <text x="24" y="22" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="15" fill="#34d399">
+    <!-- Top Minimal Tag (Properly sized with generous padding and centered text) -->
+    <rect x="0" y="0" width="280" height="36" rx="18" fill="#042f2e" stroke="#10b981" stroke-width="1.5" opacity="0.95" />
+    <text x="140" y="23" text-anchor="middle" font-family="'Hind Siliguri', 'SolaimanLipi', 'Nirmala UI', sans-serif" font-weight="700" font-size="15" fill="#34d399">
       🌿 প্রাকৃতিক সুরক্ষা ও সতেজতা
     </text>
 
     <!-- Main Brand Name -->
-    <text x="0" y="105" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="78" fill="#ffffff" letter-spacing="-1.5">
+    <text x="0" y="110" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="80" fill="#ffffff" letter-spacing="-1.5">
       Aura<tspan fill="#34d399">Fresh</tspan>
     </text>
 
     <!-- Bengali Tagline -->
-    <text x="2" y="165" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="28" fill="#e2e8f0" letter-spacing="0.5">
+    <text x="2" y="170" font-family="'Hind Siliguri', 'SolaimanLipi', 'Nirmala UI', sans-serif" font-weight="700" font-size="28" fill="#e2e8f0" letter-spacing="0.5">
       আপনার ঘরের বিশুদ্ধ ও সুরক্ষিত আবাসন
     </text>
 
     <!-- 3 Minimal Value Pillars -->
-    <g transform="translate(2, 215)">
+    <g transform="translate(2, 225)">
       <!-- Pillar 1 -->
-      <rect x="0" y="0" width="160" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
-      <text x="18" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+      <rect x="0" y="0" width="165" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="82.5" y="24" text-anchor="middle" font-family="'Hind Siliguri', 'SolaimanLipi', 'Nirmala UI', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
         ✔ ১০০% বায়ো-সেফ
       </text>
 
       <!-- Pillar 2 -->
-      <rect x="175" y="0" width="180" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
-      <text x="193" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+      <rect x="180" y="0" width="195" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="277.5" y="24" text-anchor="middle" font-family="'Hind Siliguri', 'SolaimanLipi', 'Nirmala UI', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
         ✔ কেমিক্যালমুক্ত সুরক্ষা
       </text>
 
       <!-- Pillar 3 -->
-      <rect x="370" y="0" width="170" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
-      <text x="388" y="24" font-family="'SolaimanLipi', 'Hind Siliguri', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
+      <rect x="390" y="0" width="180" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="480" y="24" text-anchor="middle" font-family="'Hind Siliguri', 'SolaimanLipi', 'Nirmala UI', sans-serif" font-weight="700" font-size="14" fill="#a7f3d0">
         ✔ দীর্ঘস্থায়ী সতেজতা
       </text>
     </g>
-
-    <!-- Website URL -->
-    <text x="4" y="295" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="16" fill="#64748b" letter-spacing="2">
-      WWW.AURAFRESHBD.COM
-    </text>
   </g>
 
   <!-- Right Visual Symbol Representation (Clean, Elegant, Large Aura Shield Mark) -->
