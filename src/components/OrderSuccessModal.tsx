@@ -68,7 +68,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({ orderDetai
           </div>
           <div className="flex justify-between">
             <span className="font-medium">ডেলিভারি চার্জ:</span>
-            <span className="font-bold text-emerald-700">ফ্রি (৳০)</span>
+            <span className="font-bold text-slate-900">৳{orderDetails.deliveryCharge || 60}</span>
           </div>
           <div className="pt-2 border-t border-slate-200 flex justify-between font-black text-sm text-slate-900">
             <span>মোট প্রদেয় বিল:</span>

@@ -41,19 +41,19 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick, onExploreScience }) =>
               <b className="text-slate-900 font-semibold">{SITE_CONFIG.brandNameBn}</b> কোনো ক্ষতিকর সেন্ট বা কেমিক্যাল দিয়ে গন্ধকে সাময়িক ঢেকে রাখে না। এর <b>অ্যাক্টিভেটেড কার্বন</b> বাতাস থেকে আর্দ্রতা ও ভ্যাপসা গন্ধ আটকে ফেলে এবং <b>পটাশিয়াম পারম্যাঙ্গানেট</b> পেঁয়াজ, রসুন ও ঘামের দুর্গন্ধ সৃষ্টিকারী অর্গানোসালফার অণুকে স্থায়ীভাবে ভেঙে ধ্বংস করে।
             </p>
 
-            {/* Key Quick USPs Grid (Mobile 2-col) */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 text-left">
-              <div className="flex items-center gap-2 bg-white/90 border border-slate-200 p-2.5 rounded-xl shadow-xs">
+            {/* Key Quick USPs Grid (3 Columns across mobile & desktop with Middle Alignment) */}
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-2 bg-white/95 border border-slate-200 p-2 sm:p-2.5 rounded-xl shadow-xs">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="text-xs sm:text-sm font-bold text-slate-800">কোনো কৃত্রিম সেন্ট নেই</span>
+                <span className="text-[11px] sm:text-sm font-bold text-slate-800 leading-tight">কোনো কৃত্রিম সেন্ট নেই</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/90 border border-slate-200 p-2.5 rounded-xl shadow-xs">
-                <Zap className="w-4 h-4 text-amber-500 shrink-0" />
-                <span className="text-xs sm:text-sm font-bold text-slate-800">১৫ মিনিটে গন্ধ শুষে নেয়</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/90 border border-slate-200 p-2.5 rounded-xl shadow-xs col-span-2 sm:col-span-1">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-2 bg-white/95 border border-emerald-200 bg-emerald-50/40 p-2 sm:p-2.5 rounded-xl shadow-xs">
                 <ShieldCheck className="w-4 h-4 text-teal-600 shrink-0" />
-                <span className="text-xs sm:text-sm font-bold text-slate-800">বাচ্চা ও রোগীর জন্য নিরাপদ</span>
+                <span className="text-[11px] sm:text-sm font-bold text-slate-800 leading-tight">বাচ্চা ও রোগীর জন্য নিরাপদ</span>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1 sm:gap-2 bg-white/95 border border-slate-200 p-2 sm:p-2.5 rounded-xl shadow-xs">
+                <Zap className="w-4 h-4 text-amber-500 shrink-0" />
+                <span className="text-[11px] sm:text-sm font-bold text-slate-800 leading-tight">১৫ মিনিটে গন্ধ দূর করে</span>
               </div>
             </div>
 
@@ -150,7 +150,7 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick, onExploreScience }) =>
                 {/* Bottom Strip */}
                 <div className="bg-emerald-900/40 border border-emerald-500/30 rounded-xl p-2.5 sm:p-3 flex items-center justify-between text-xs">
                   <span className="text-emerald-300 font-semibold">কার্যকাল: ৩ থেকে ৬ মাস</span>
-                  <span className="text-slate-300">কালার ইন্ডিকেটরযুক্ত</span>
+                  <span className="text-slate-300">১০০% প্রাকৃতিক সুরক্ষা</span>
                 </div>
               </div>
 

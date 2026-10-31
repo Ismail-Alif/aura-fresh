@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, ArrowRight, Check, X, Sparkles, Beaker } from "lucide-react";
+import { ShieldCheck, Check, X, Sparkles, Beaker } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
 
 export const ScienceExplainer: React.FC = () => {
@@ -116,43 +116,6 @@ export const ScienceExplainer: React.FC = () => {
             <div className="mt-6 pt-4 border-t border-slate-700 text-[11px] font-bold text-emerald-400 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" />
               <span>ফলাফল: স্থায়ী সমাধান ও শতভাগ নিরাপদ</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Color Changing Spent Media Indicator Feature */}
-        <div className="bg-gradient-to-r from-purple-50 via-slate-50 to-emerald-50 border border-purple-200/60 rounded-3xl p-6 sm:p-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-200/60 px-2.5 py-1 rounded-md">
-                স্মার্ট ভিজ্যুয়াল ইন্ডিকেটর
-              </span>
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                পণ্য শেষ হয়ে গেছে কিনা বুঝবেন কীভাবে?
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                পটাশিয়াম পারম্যাঙ্গানেট পিলেটের একটি অনন্য প্রাকৃতিক বৈশিষ্ট্য হলো এর বেগুনি রঙ। যখন এটি দুর্গন্ধের সালফার অণুগুলোকে সম্পূর্ণ ধ্বংস করে ফেলে, তখন এটি ধীরে ধীরে <b>বেগুনী থেকে কালচে-বাদামী (Manganese Dioxide)</b> রঙে পরিবর্তিত হয়। ফলে আপনি নিজেই দেখে বুঝতে পারবেন আপনার ফিল্টারটি কার্যকরভাবে সব গন্ধ শেষ করেছে এবং নতুন রিফিল নেয়ার সময় হয়েছে।
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 flex items-center justify-center gap-4">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-2xl bg-purple-600 border-4 border-white shadow-lg mx-auto flex items-center justify-center text-white font-bold text-xs">
-                  নতুন
-                </div>
-                <div className="text-xs font-bold text-purple-900 mt-2">উজ্জ্বল বেগুনী</div>
-                <div className="text-[10px] text-slate-500">পূর্ণ কার্যকর</div>
-              </div>
-
-              <ArrowRight className="w-6 h-6 text-slate-400 shrink-0" />
-
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-2xl bg-amber-950 border-4 border-white shadow-lg mx-auto flex items-center justify-center text-white font-bold text-xs">
-                  মেয়াদ শেষ
-                </div>
-                <div className="text-xs font-bold text-slate-800 mt-2">কালচে বাদামী</div>
-                <div className="text-[10px] text-slate-500">পরিবর্তনযোগ্য</div>
-              </div>
             </div>
           </div>
         </div>

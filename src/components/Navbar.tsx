@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
               <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500"></span>
             </span>
             <span className="font-bold text-amber-400 shrink-0">🔥 স্পেশাল অফার:</span>
-            <span className="text-slate-200 truncate">ধামাকা অফারে মাত্র ৳৯৯৯ + সারাদেশে ফ্রি হোম ডেলিভারি!</span>
+            <span className="text-slate-200 truncate">সীমিত সময়ের ধামাকা অফারে মাত্র ৳৯৯৯ + ক্যাশ অন ডেলিভারি!</span>
           </div>
         </div>
       </div>

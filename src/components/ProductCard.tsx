@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Check, Sparkles, Truck } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { ProductPackage } from "@/config/site";
 
 interface ProductCardProps {
@@ -94,13 +94,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ pkg, isSelected, onSel
         >
           <span>{isSelected ? "প্যাকেজটি সিলেক্ট করা আছে" : "এই প্যাকেজটি সিলেক্ট করুন"}</span>
         </button>
-
-        {pkg.freeShipping && (
-          <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-emerald-700 mt-2">
-            <Truck className="w-3.5 h-3.5" />
-            <span>সারাদেশে হোম ডেলিভারি ফ্রি</span>
-          </div>
-        )}
       </div>
     </div>
   );

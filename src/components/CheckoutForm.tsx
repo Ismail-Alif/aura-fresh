@@ -23,9 +23,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Pricing: 100% Free Nationwide Delivery (৳0)
+  // Pricing: Dhaka 60 BDT, Outside Dhaka 80 BDT
   const subtotal = selectedPackage.price * quantity;
-  const grandTotal = subtotal;
+  const deliveryCharge = deliveryArea === "insideDhaka" ? 60 : 80;
+  const grandTotal = subtotal + deliveryCharge;
 
   // Real-time Bangla to English digit normalization (Matching Ummah Wed & Vocab Joy)
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,12 +72,12 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
       productId: selectedPackage.id,
       quantity,
       subtotal,
-      deliveryCharge: 0,
+      deliveryCharge,
       grandTotal,
       customerName: customerName.trim(),
       customerPhone: phoneValidation.phone,
       customerAddress: customerAddress.trim(),
-      deliveryArea: deliveryArea === "insideDhaka" ? "ঢাকা সিটির ভেতরে" : "ঢাকার বাইরে (সারাদেশে)",
+      deliveryArea: deliveryArea === "insideDhaka" ? "ঢাকা সিটির ভেতরে (৳৬০)" : "ঢাকার বাইরে (৳৮০)",
       paymentMethod: "ক্যাশ অন ডেলিভারি (COD)",
       bkashTrxId: null,
       createdAt: new Date().toISOString(),
@@ -163,7 +164,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95"
+                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95 cursor-pointer"
                 >
                   -
                 </button>
@@ -171,7 +172,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95"
+                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95 cursor-pointer"
                 >
                   +
                 </button>
@@ -188,7 +189,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
             <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <div className="flex items-center gap-1 text-emerald-300 font-bold">
                 <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>ডেলিভারি: সম্পূর্ণ ফ্রি (৳০)</span>
+                <span>ডেলিভারি চার্জ: {deliveryArea === "insideDhaka" ? "৳৬০ (ঢাকা সিটি)" : "৳৮০ (ঢাকার বাইরে)"}</span>
               </div>
               <div className="flex items-center gap-1.5 text-slate-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -248,30 +249,30 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
             {/* Delivery Area Pills (Compact 2-col) */}
             <div>
               <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">
-                ডেলিভারি এলাকা *
+                ডেলিভারি এলাকা নির্বাচন করুন *
               </label>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <button
                   type="button"
                   onClick={() => setDeliveryArea("insideDhaka")}
-                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all ${
+                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all cursor-pointer ${
                     deliveryArea === "insideDhaka"
                       ? "bg-emerald-50 border-emerald-500 text-emerald-800 ring-1 ring-emerald-500"
                       : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
                   }`}
                 >
-                  ঢাকা সিটি (ফ্রি)
+                  ঢাকা সিটি (৳৬০)
                 </button>
                 <button
                   type="button"
                   onClick={() => setDeliveryArea("outsideDhaka")}
-                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all ${
+                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all cursor-pointer ${
                     deliveryArea === "outsideDhaka"
                       ? "bg-emerald-50 border-emerald-500 text-emerald-800 ring-1 ring-emerald-500"
                       : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
                   }`}
                 >
-                  ঢাকার বাইরে (ফ্রি)
+                  ঢাকার বাইরে (৳৮০)
                 </button>
               </div>
             </div>
@@ -309,7 +310,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
             <div className="grid grid-cols-3 gap-1 pt-3 border-t border-slate-100 text-center">
               <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-bold text-slate-600">
                 <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>ফ্রি হোম ডেলিভারি</span>
+                <span>দ্রুততম হোম ডেলিভারি</span>
               </div>
               <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-bold text-slate-600">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />

@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
             <div className="space-y-2.5 text-xs text-slate-300">
               <div className="flex items-center gap-2">
                 <Truck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>সারাদেশে সম্পূর্ণ ফ্রি হোম ডেলিভারি</span>
+                <span>সারাদেশে নির্ভরযোগ্য হোম ডেলিভারি</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
