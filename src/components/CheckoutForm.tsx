@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ProductPackage, SITE_CONFIG, OrderDetails } from "@/config/site";
-import { AlertCircle, Sparkles, CheckCircle2 } from "lucide-react";
+import { ProductPackage, OrderDetails } from "@/config/site";
+import { AlertCircle, Sparkles, Truck, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import {
   trackInitiateCheckout,
   trackPurchase,
@@ -20,17 +20,21 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [deliveryArea, setDeliveryArea] = useState<"insideDhaka" | "outsideDhaka">("insideDhaka");
-  const [paymentMethod, setPaymentMethod] = useState<"cod" | "bkash">("cod");
-  const [bkashTrxId, setBkashTrxId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Calculate pricing with 100% Free Nationwide Delivery
+  // Pricing: 100% Free Nationwide Delivery (৳0)
   const subtotal = selectedPackage.price * quantity;
-  const deliveryCharge = 0;
   const grandTotal = subtotal;
 
-  // Dedicated CAPI Phone Enrichment (Matches Vocab Joy)
+  // Real-time Bangla to English digit normalization (Matching Ummah Wed & Vocab Joy)
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/[০-৯]/g, (d) => String("০১২৩৪৫৬৭৮৯".indexOf(d)));
+    setCustomerPhone(val);
+    if (errorMsg) setErrorMsg("");
+  };
+
+  // Dedicated CAPI Phone Enrichment on Blur (EMQ 9.5+)
   const handlePhoneBlur = () => {
     const val = validateBdPhone(customerPhone);
     if (val.ok) {
@@ -60,11 +64,6 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
       return;
     }
 
-    if (paymentMethod === "bkash" && !bkashTrxId.trim()) {
-      setErrorMsg("বিকাশ সিলেক্ট করলে ট্রানজেকশন আইডি (TrxID) বা যে নম্বর থেকে পাঠিয়েছেন তা লিখুন।");
-      return;
-    }
-
     setIsSubmitting(true);
 
     const orderPayload = {
@@ -72,14 +71,14 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
       productId: selectedPackage.id,
       quantity,
       subtotal,
-      deliveryCharge,
+      deliveryCharge: 0,
       grandTotal,
-      customerName,
+      customerName: customerName.trim(),
       customerPhone: phoneValidation.phone,
-      customerAddress,
-      deliveryArea: deliveryArea === "insideDhaka" ? "ঢাকার ভেতরে" : "ঢাকার বাইরে",
-      paymentMethod: paymentMethod === "cod" ? "ক্যাশ অন ডেলিভারি" : "বিকাশ পেমেন্ট",
-      bkashTrxId: paymentMethod === "bkash" ? bkashTrxId : null,
+      customerAddress: customerAddress.trim(),
+      deliveryArea: deliveryArea === "insideDhaka" ? "ঢাকা সিটির ভেতরে" : "ঢাকার বাইরে (সারাদেশে)",
+      paymentMethod: "ক্যাশ অন ডেলিভারি (COD)",
+      bkashTrxId: null,
       createdAt: new Date().toISOString(),
     };
 
@@ -100,9 +99,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
         product: selectedPackage.bnTitle,
         grandTotal,
         quantity,
-        customerName,
+        customerName: customerName.trim(),
         customerPhone: phoneValidation.phone,
-        customerAddress,
+        customerAddress: customerAddress.trim(),
       });
 
       onOrderSuccess({ ...orderPayload, orderId });
@@ -110,16 +109,15 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
       console.error("Order submit error:", err);
       const fallbackOrderId = `AC-${Date.now()}`;
 
-      // Fallback tracking
       await trackPurchase({
         orderId: fallbackOrderId,
         productId: selectedPackage.id,
         product: selectedPackage.bnTitle,
         grandTotal,
         quantity,
-        customerName,
+        customerName: customerName.trim(),
         customerPhone: phoneValidation.phone,
-        customerAddress,
+        customerAddress: customerAddress.trim(),
       });
 
       onOrderSuccess({ ...orderPayload, orderId: fallbackOrderId });
@@ -129,285 +127,199 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
   };
 
   return (
-    <section id="checkout" className="py-16 sm:py-24 bg-gradient-to-b from-white via-slate-50 to-emerald-50/20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <section id="checkout" className="py-8 sm:py-16 bg-gradient-to-b from-white via-slate-50 to-emerald-50/20">
+      <div className="max-w-2xl mx-auto px-3 sm:px-6">
         
-        {/* Section Heading */}
-        <div className="text-center space-y-3 mb-10">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold px-3 py-1 rounded-full">
-            <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span>সহজ ও নিরাপদ অর্ডারিং</span>
+        {/* Compact Heading (Matching Ummah Wed) */}
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full mb-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            <span>১০০% ক্যাশ অন ডেলিভারি স্পেশাল অফার</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন
+          <h2 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            অর্ডার ফর্ম পূরণ করুন
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">
-            নিচের ফর্মে আপনার ডেলিভারি তথ্য দিন। কোনো অগ্রিম টাকা ছাড়াই সারাদেশে পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধের সুবিধা।
+          <p className="text-slate-600 text-[11px] sm:text-xs mt-0.5">
+            অগ্রিম কোনো টাকা দিতে হবে না, পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধ করুন।
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-xl shadow-slate-200/50">
+        {/* Unified Compact Order Card (Fits on single mobile screen) */}
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-slate-200/90 shadow-xl shadow-slate-200/50">
           
-          {/* Selected Package Badge / Summary */}
-          <div className="bg-emerald-50/60 border border-emerald-200/60 rounded-2xl p-4 sm:p-5 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1">
-                নির্বাচিত প্যাকেজ
-              </div>
-              <div className="text-lg sm:text-xl font-black text-slate-900">
-                {selectedPackage.bnTitle}
-              </div>
-              <div className="text-xs text-slate-600 mt-0.5">
-                {selectedPackage.weight} | {selectedPackage.subtitle}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <div className="text-xs text-slate-500 line-through">
-                  ৳{selectedPackage.originalPrice}
-                </div>
-                <div className="text-2xl font-black text-emerald-700">
-                  ৳{selectedPackage.price}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Top Order & Pricing Strip (Ummah Wed Compact Style) */}
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-xl p-3 sm:p-4 mb-4 shadow-sm">
             
-            {/* Quantity Selector */}
-            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
-              <div>
-                <div className="text-sm font-bold text-slate-900">প্যাকেজের সংখ্যা (Quantity)</div>
-                <div className="text-xs text-emerald-700 font-bold mt-0.5 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>সারাদেশে হোম ডেলিভারি সম্পূর্ণ ফ্রি!</span>
-                </div>
+            {/* Row 1: Product, Quantity Counter & Total */}
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <div className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">প্যাকেজ</div>
+                <div className="text-xs sm:text-sm font-black truncate">{selectedPackage.bnTitle}</div>
+                <div className="text-[10px] text-slate-300 font-mono">৳{selectedPackage.price} / বক্স</div>
               </div>
 
-              <div className="flex items-center gap-3">
+              {/* Quantity Changer */}
+              <div className="flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-lg border border-white/15 shrink-0">
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center transition"
+                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95"
                 >
                   -
                 </button>
-                <span className="text-base font-black w-6 text-center text-slate-900">{quantity}</span>
+                <span className="font-black text-sm w-5 text-center text-white">{quantity}</span>
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center transition"
+                  className="w-6 h-6 bg-white text-slate-900 rounded-md font-black text-sm flex items-center justify-center hover:bg-slate-100 transition active:scale-95"
                 >
                   +
                 </button>
               </div>
-            </div>
 
-            {/* Error Message Alert */}
-            {errorMsg && (
-              <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-start gap-2.5">
-                <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600 mt-0.5" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            {/* Customer Information Form Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                  আপনার পূর্ণ নাম *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="যেমন: মোঃ কামরুল ইসলাম"
-                  value={customerName}
-                  onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_name_focus" })}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                  আপনার মোবাইল নম্বর *
-                </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="017XXXXXXXX"
-                  value={customerPhone}
-                  onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_phone_focus" })}
-                  onBlur={handlePhoneBlur}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
-                />
+              {/* Total Price Callout */}
+              <div className="text-right shrink-0 pl-1">
+                <div className="text-[10px] text-slate-300">সর্বমোট প্রদেয়</div>
+                <div className="text-base sm:text-xl font-black text-amber-400">৳{grandTotal}</div>
               </div>
             </div>
 
-            {/* Delivery Area Selection (Both Free) */}
+            {/* Row 2: Badges Bar */}
+            <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+              <div className="flex items-center gap-1 text-emerald-300 font-bold">
+                <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>ডেলিভারি: সম্পূর্ণ ফ্রি (৳০)</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-slate-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-semibold">ক্যাশ অন ডেলিভারি</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Error Message Alert */}
+          {errorMsg && (
+            <div className="mb-3 p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {/* Compact Input Form */}
+          <form onSubmit={handleSubmit} className="space-y-3">
+            
+            {/* Name Input */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                ডেলিভারি এলাকা নির্বাচন করুন *
+              <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">
+                আপনার নাম *
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <label
-                  className={`flex items-center justify-between p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    deliveryArea === "insideDhaka"
-                      ? "bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/10"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="radio"
-                      name="deliveryArea"
-                      checked={deliveryArea === "insideDhaka"}
-                      onChange={() => setDeliveryArea("insideDhaka")}
-                      className="accent-emerald-600"
-                    />
-                    <span className="text-xs sm:text-sm font-bold text-slate-800">ঢাকা সিটির ভেতরে</span>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">
-                    ফ্রি ডেলিভারি
-                  </span>
-                </label>
+              <input
+                type="text"
+                required
+                placeholder="যেমন: মোঃ কামরুল ইসলাম"
+                value={customerName}
+                onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_name_focus" })}
+                onChange={(e) => {
+                  setCustomerName(e.target.value);
+                  if (errorMsg) setErrorMsg("");
+                }}
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+              />
+            </div>
 
-                <label
-                  className={`flex items-center justify-between p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    deliveryArea === "outsideDhaka"
-                      ? "bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/10"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
+            {/* Phone Input with Real-time Bangla Normalization & CAPI Blur Enrichment */}
+            <div>
+              <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">
+                মোবাইল নম্বর (১১ ডিজিট) *
+              </label>
+              <input
+                type="tel"
+                required
+                placeholder="017XXXXXXXX"
+                value={customerPhone}
+                onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_phone_focus" })}
+                onBlur={handlePhoneBlur}
+                onChange={handlePhoneChange}
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-mono"
+              />
+            </div>
+
+            {/* Delivery Area Pills (Compact 2-col) */}
+            <div>
+              <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">
+                ডেলিভারি এলাকা *
+              </label>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setDeliveryArea("insideDhaka")}
+                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all ${
+                    deliveryArea === "insideDhaka"
+                      ? "bg-emerald-50 border-emerald-500 text-emerald-800 ring-1 ring-emerald-500"
+                      : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="radio"
-                      name="deliveryArea"
-                      checked={deliveryArea === "outsideDhaka"}
-                      onChange={() => setDeliveryArea("outsideDhaka")}
-                      className="accent-emerald-600"
-                    />
-                    <span className="text-xs sm:text-sm font-bold text-slate-800">ঢাকার বাইরে (সারাদেশে)</span>
-                  </div>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">
-                    ফ্রি ডেলিভারি
-                  </span>
-                </label>
+                  ঢাকা সিটি (ফ্রি)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDeliveryArea("outsideDhaka")}
+                  className={`py-2 px-2.5 rounded-xl border text-center font-bold transition-all ${
+                    deliveryArea === "outsideDhaka"
+                      ? "bg-emerald-50 border-emerald-500 text-emerald-800 ring-1 ring-emerald-500"
+                      : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                  }`}
+                >
+                  ঢাকার বাইরে (ফ্রি)
+                </button>
               </div>
             </div>
 
-            {/* Full Delivery Address */}
+            {/* Address Field */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                পূর্ণাঙ্গ ঠিকানা (বাসা/রোড নম্বর, এলাকা, থানা, জেলা) *
+              <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">
+                পূর্ণাঙ্গ ঠিকানা (বাসা/রোড নম্বর, এলাকা, থানা ও জেলা) *
               </label>
               <textarea
                 required
                 rows={2}
-                placeholder="যেমন: বাড়ি #১২, রোড #৪, ধানমন্ডি, ঢাকা"
+                placeholder="যেমন: বাড়ি #১২, রোড #৪, সেক্টর #৩, উত্তরা, ঢাকা"
                 value={customerAddress}
                 onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_address_focus" })}
-                onChange={(e) => setCustomerAddress(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all resize-none"
+                onChange={(e) => {
+                  setCustomerAddress(e.target.value);
+                  if (errorMsg) setErrorMsg("");
+                }}
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all resize-none"
               ></textarea>
             </div>
 
-            {/* Payment Method Selector */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                পেমেন্ট মেথড *
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <label
-                  className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    paymentMethod === "cod"
-                      ? "bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500/10"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === "cod"}
-                    onChange={() => setPaymentMethod("cod")}
-                    className="accent-emerald-600"
-                  />
-                  <div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900">ক্যাশ অন ডেলিভারি</div>
-                    <div className="text-[11px] text-slate-500">পণ্য হাতে পেয়ে চেক করে টাকা দিন</div>
-                  </div>
-                </label>
-
-                <label
-                  className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    paymentMethod === "bkash"
-                      ? "bg-pink-50 border-pink-500 ring-2 ring-pink-500/10"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === "bkash"}
-                    onChange={() => setPaymentMethod("bkash")}
-                    className="accent-pink-600"
-                  />
-                  <div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900">বিকাশ পেমেন্ট</div>
-                    <div className="text-[11px] text-slate-500">বিকাশ সেন্ড মানি করুন</div>
-                  </div>
-                </label>
-              </div>
-
-              {/* bKash instructions box if bkash is selected */}
-              {paymentMethod === "bkash" && (
-                <div className="mt-3 p-4 rounded-xl bg-pink-50/80 border border-pink-200 text-xs space-y-2">
-                  <div className="font-bold text-pink-900">
-                    বিকাশ নম্বর: <span className="text-pink-700 font-mono text-sm">{SITE_CONFIG.bkashNumber}</span> ({SITE_CONFIG.bkashType})
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    placeholder="বিকাশ TrxID বা প্রেরক নম্বর দিন..."
-                    value={bkashTrxId}
-                    onChange={(e) => setBkashTrxId(e.target.value)}
-                    className="w-full bg-white border border-pink-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Pricing Summary Box */}
-            <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 space-y-2 text-xs sm:text-sm">
-              <div className="flex justify-between text-slate-600">
-                <span>প্যাকেজ মূল্য ({quantity} টি):</span>
-                <span className="font-bold text-slate-900">৳{subtotal}</span>
-              </div>
-              <div className="flex justify-between text-slate-600">
-                <span>ডেলিভারি চার্জ:</span>
-                <span className="font-bold text-emerald-700">ফ্রি (৳০)</span>
-              </div>
-              <div className="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span>আজকের স্পেশাল অফারে সারাদেশে হোম ডেলিভারি সম্পূর্ণ ফ্রি!</span>
-              </div>
-              <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-base sm:text-lg font-black text-slate-900">
-                <span>সর্বমোট প্রদেয় বিল:</span>
-                <span className="text-emerald-700">৳{grandTotal}</span>
-              </div>
-            </div>
-
-            {/* Submit Order Button (No icon to avoid line breaking) */}
+            {/* Submit Button (High-conversion, single line, no wrap) */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white font-black text-base sm:text-lg py-4 px-4 rounded-2xl shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/40 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center cursor-pointer whitespace-nowrap"
+              className="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-800 disabled:bg-slate-400 text-white font-black text-sm sm:text-base py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/40 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap mt-2"
             >
               <span>{isSubmitting ? "অর্ডার প্রসেস হচ্ছে..." : `অর্ডার কনফার্ম করুন • ৳${grandTotal}`}</span>
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
+
+            {/* Trust Badges Bar (Matching Ummah Wed) */}
+            <div className="grid grid-cols-3 gap-1 pt-3 border-t border-slate-100 text-center">
+              <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-bold text-slate-600">
+                <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>ফ্রি হোম ডেলিভারি</span>
+              </div>
+              <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-bold text-slate-600">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>ক্যাশ অন ডেলিভারি</span>
+              </div>
+              <div className="flex items-center justify-center gap-1 text-[10px] sm:text-[11px] font-bold text-slate-600">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>পণ্য দেখে মূল্য পরিশোধ</span>
+              </div>
+            </div>
 
           </form>
 
