@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ShoppingBag, ShieldCheck, PhoneCall, Menu, X } from "lucide-react";
 import { SITE_CONFIG } from "@/config/site";
+import { trackContact } from "@/lib/metaPixel";
 
 interface NavbarProps {
   onOrderClick: () => void;
@@ -82,6 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
         <div className="flex items-center gap-2 sm:gap-3">
           <a
             href={`tel:${SITE_CONFIG.supportPhone}`}
+            onClick={() => trackContact("hotline")}
             className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 py-2.5 px-3.5 rounded-xl transition-colors"
           >
             <PhoneCall className="w-3.5 h-3.5 text-emerald-600" />

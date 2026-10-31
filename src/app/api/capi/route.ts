@@ -35,7 +35,7 @@ const __phone = (phone?: string | null) => {
   return p;
 };
 
-// SHA256 hash helper for CAPI compliance
+// SHA256 hash helper for Meta CAPI compliance
 const hash = (value?: string | null) => {
   if (!value) return null;
   return crypto.createHash("sha256").update(String(value).trim().toLowerCase()).digest("hex");
@@ -47,7 +47,25 @@ const ALLOWED_EVENTS = new Set([
   "InitiateCheckout",
   "Lead",
   "Purchase",
+  "Contact",
 ]);
+
+const ALLOWED_ROOT_DOMAINS = ["aurafreshbd.com", "aurafresh.com", "aerocure.com"];
+
+const isValidAuraFreshUrl = (urlStr?: string | null): boolean => {
+  if (!urlStr || typeof urlStr !== "string") return false;
+  try {
+    const parsed = new URL(urlStr);
+    const host = parsed.hostname;
+    const isDevHost = host === "localhost" || host === "127.0.0.1";
+    const allowed =
+      ALLOWED_ROOT_DOMAINS.some((d) => host === d || host.endsWith(`.${d}`)) ||
+      (isDevHost && process.env.NODE_ENV !== "production");
+    return (parsed.protocol === "http:" || parsed.protocol === "https:") && allowed;
+  } catch {
+    return false;
+  }
+};
 
 export async function POST(req: Request) {
   try {
@@ -62,6 +80,7 @@ export async function POST(req: Request) {
       name,
       phone,
       address,
+      testEventCode,
     } = body;
 
     if (!eventName || !ALLOWED_EVENTS.has(eventName)) {
@@ -80,7 +99,6 @@ export async function POST(req: Request) {
       process.env.FB_CAPI_TOKEN ||
       "EAAVJ1Tj8PswBS0XSdi6ZCUMkwmIJujWSXWXXAWwgNJaZATSEX032UDvxMNC78VdulWxzq205C1aIDPPZCWnt3weZAFOtj09rHWlutASwYBDZC4etqZCSIoZAuDFKHGihNcZCLy04VG8xHQuG2KYSXMjpKEcpTxQYYlTm1UYGtYKS4lXao8zjKhZBgq2fyHklmSI93MQZDZD";
 
-    // If pixel or CAPI token is not configured yet in .env, gracefully acknowledge without error
     if (!pixelId || !accessToken) {
       console.log(`[CAPI Info] Event ${eventName} received (Pixel/Token not set in env yet).`);
       return NextResponse.json({
@@ -98,7 +116,9 @@ export async function POST(req: Request) {
     const phn = __phone(phone);
 
     const referer = req.headers.get("referer");
-    const sourceUrl = eventUrl || referer || "https://aurafreshbd.com";
+    const sourceUrl =
+      [eventUrl, referer].find((candidate) => isValidAuraFreshUrl(candidate)) ||
+      "https://aurafreshbd.com";
 
     const payload: Record<string, unknown> = {
       data: [
@@ -126,7 +146,7 @@ export async function POST(req: Request) {
     };
 
     // Test event code support for Meta Events Manager testing
-    const testCode = process.env.AURAFRESH_TEST_EVENT_CODE;
+    const testCode = testEventCode || req.headers.get("x-fb-test-code") || process.env.AURAFRESH_TEST_EVENT_CODE;
     if (testCode) {
       payload.test_event_code = testCode;
     }

@@ -14,6 +14,8 @@ import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { OrderSuccessModal } from "@/components/OrderSuccessModal";
 import { MobileBottomBar } from "@/components/MobileBottomBar";
+import { ViewContentTracker } from "@/components/ViewContentTracker";
+import { trackInitiateCheckout } from "@/lib/metaPixel";
 import { Tag } from "lucide-react";
 
 export default function Home() {
@@ -22,6 +24,9 @@ export default function Home() {
   const [placedOrder, setPlacedOrder] = useState<OrderDetails | null>(null);
 
   const scrollToCheckout = () => {
+    // Dual fire InitiateCheckout on CTA click (Matching VocabJoy handleCtaClick)
+    trackInitiateCheckout({ product: selectedPackage, source: "cta_button_click" });
+
     const el = document.getElementById("checkout");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -42,6 +47,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-500 selection:text-white">
+      {/* ViewContent Meta Pixel & CAPI Dual Dispatch Tracker (Matching Ummah Wed & Vocab Joy) */}
+      <ViewContentTracker product={selectedPackage} />
+
       {/* Navigation */}
       <Navbar onOrderClick={scrollToCheckout} />
 

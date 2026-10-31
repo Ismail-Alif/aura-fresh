@@ -1,28 +1,37 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Script from "next/script";
-import { trackMetaEvent } from "@/lib/metaPixel";
+import { usePathname } from "next/navigation";
+import { trackMetaEvent, FB_PIXEL_ID } from "@/lib/metaPixel";
 
 interface MetaPixelTrackerProps {
   pixelId?: string;
 }
 
 export const MetaPixelTracker: React.FC<MetaPixelTrackerProps> = ({
-  pixelId = process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID ||
-    process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
-    "1162023116505358",
+  pixelId = FB_PIXEL_ID,
 }) => {
+  const pathname = usePathname();
+  const initialMounted = useRef(false);
+
+  // 1. Initial Mount: Dual-dispatch PageView with deduplication ID
   useEffect(() => {
-    // Fire deduplicated PageView on mount
     trackMetaEvent({ eventName: "PageView" });
+    initialMounted.current = true;
   }, []);
+
+  // 2. Client-side Route Changes: Track subsequent PageViews
+  useEffect(() => {
+    if (!initialMounted.current) return;
+    trackMetaEvent({ eventName: "PageView" });
+  }, [pathname]);
 
   if (!pixelId) return null;
 
   return (
     <>
-      {/* Meta Pixel Code matching VocabJoy format */}
+      {/* Meta Pixel Standard Base Code */}
       <Script
         id="fb-pixel"
         strategy="afterInteractive"

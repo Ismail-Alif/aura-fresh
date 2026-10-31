@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckCircle2, Truck, PhoneCall, X } from "lucide-react";
 import { SITE_CONFIG, OrderDetails } from "@/config/site";
+import { trackContact } from "@/lib/metaPixel";
 
 interface OrderSuccessModalProps {
   orderDetails: OrderDetails;
@@ -80,6 +81,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({ orderDetai
           
           <a
             href={`tel:${SITE_CONFIG.supportPhone}`}
+            onClick={() => trackContact("hotline")}
             className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-xl transition-colors text-xs flex items-center justify-center gap-2"
           >
             <PhoneCall className="w-3.5 h-3.5 text-emerald-600" />
