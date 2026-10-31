@@ -273,7 +273,7 @@ export const trackInitiateCheckout = (options: InitiateCheckoutOptions = {}): st
   const product = options.product || {
     id: "pro-multi-room-500g",
     bnTitle: "প্রো মাল্টি-রুম বক্স (৫০০ গ্রাম)",
-    price: 890,
+    price: 999,
   };
 
   const customData = {

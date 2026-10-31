@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ShoppingBag, ShieldCheck, PhoneCall, Menu, X } from "lucide-react";
-import { SITE_CONFIG } from "@/config/site";
-import { trackContact } from "@/lib/metaPixel";
+import { Menu, X } from "lucide-react";
 
 interface NavbarProps {
   onOrderClick: () => void;
@@ -21,21 +19,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all">
-      {/* Top Notification Bar */}
-      <div className="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white text-xs sm:text-sm py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>আজকের অফার: যেকোনো ২টি প্যাকেজ অর্ডার করলেই <b>সারাদেশে ফ্রি হোম ডেলিভারি!</b></span>
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all w-full">
+      {/* ================= 1. TOP ANNOUNCEMENT BAR (Matching Vocab Joy) ================= */}
+      <div className="bg-slate-950 text-white py-2 px-3 sm:px-4 text-[11px] sm:text-xs font-medium border-b border-slate-800 w-full shadow-xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+            <span className="flex h-2 w-2 sm:h-2.5 sm:w-2.5 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500"></span>
+            </span>
+            <span className="font-bold text-amber-400 shrink-0">🔥 স্পেশাল অফার:</span>
+            <span className="text-slate-200 truncate">ধামাকা অফারে মাত্র ৳৯৯৯ + সারাদেশে ফ্রি হোম ডেলিভারি!</span>
+          </div>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo (Bio-Safe tag removed as requested) */}
         <div 
           onClick={() => scrollTo("hero")} 
           className="flex items-center gap-2.5 cursor-pointer group"
         >
           {/* Concept 01 Aura Shield Icon */}
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-emerald-950 border border-emerald-500/50 flex items-center justify-center p-1.5 shadow-md shadow-emerald-600/15 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-emerald-950 border border-emerald-500/50 flex items-center justify-center p-1.5 shadow-md shadow-emerald-600/15 group-hover:scale-105 transition-transform shrink-0">
             <svg viewBox="0 0 84 84" className="w-full h-full">
               <circle cx="42" cy="42" r="36" fill="none" stroke="#10b981" strokeWidth="5.5" strokeDasharray="180 35" strokeLinecap="round"/>
               <circle cx="42" cy="42" r="26" fill="none" stroke="#34d399" strokeWidth="1.8" opacity="0.4" strokeDasharray="6 5"/>
@@ -49,9 +55,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
               <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 font-sans">
                 Aura<span className="text-emerald-600">Fresh</span>
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
-                BIO-SAFE
-              </span>
             </div>
             <p className="text-[11px] text-slate-500 font-medium hidden sm:block -mt-0.5">
               প্রাকৃতিক সুরক্ষা ও সতেজতা
@@ -64,9 +67,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
           <button onClick={() => scrollTo("features")} className="hover:text-emerald-600 transition-colors">
             কেন অনন্য?
           </button>
-          <button onClick={() => scrollTo("science")} className="hover:text-emerald-600 transition-colors flex items-center gap-1">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            বিজ্ঞান ও প্রযুক্তি
+          <button onClick={() => scrollTo("science")} className="hover:text-emerald-600 transition-colors">
+            ডুয়াল প্রযুক্তি
           </button>
           <button onClick={() => scrollTo("advisor")} className="hover:text-emerald-600 transition-colors">
             রুম ক্যালকুলেটর
@@ -79,23 +81,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
           </button>
         </nav>
 
-        {/* Action Buttons */}
+        {/* Action Button (No bag icon, guaranteed single line, no phone number) */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href={`tel:${SITE_CONFIG.supportPhone}`}
-            onClick={() => trackContact("hotline")}
-            className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 py-2.5 px-3.5 rounded-xl transition-colors"
-          >
-            <PhoneCall className="w-3.5 h-3.5 text-emerald-600" />
-            <span>{SITE_CONFIG.supportPhone}</span>
-          </a>
-
           <button
             onClick={onOrderClick}
-            className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-sm sm:text-base py-2.5 px-4 sm:px-6 rounded-xl shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            className="whitespace-nowrap shrink-0 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-sm sm:text-base py-2.5 px-5 sm:px-6 rounded-xl shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/35 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>অর্ডার করুন</span>
+            অর্ডার করুন
           </button>
 
           {/* Mobile Menu Toggle */}
@@ -147,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
                 setMobileMenuOpen(false);
                 onOrderClick();
               }}
-              className="w-full text-center bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-md"
+              className="w-full text-center bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-md whitespace-nowrap"
             >
               এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)
             </button>

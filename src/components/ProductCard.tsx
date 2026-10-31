@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Check, ShoppingBag, Sparkles, Truck } from "lucide-react";
+import { Check, Sparkles, Truck } from "lucide-react";
 import { ProductPackage } from "@/config/site";
 
 interface ProductCardProps {
@@ -86,13 +86,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ pkg, isSelected, onSel
       <div>
         <button
           onClick={() => onSelect(pkg)}
-          className={`w-full py-3.5 px-4 rounded-xl font-black text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md ${
+          className={`w-full py-3.5 px-4 rounded-xl font-black text-sm sm:text-base flex items-center justify-center transition-all shadow-md whitespace-nowrap cursor-pointer ${
             isSelected
               ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/30"
               : "bg-slate-900 hover:bg-slate-800 text-white"
           }`}
         >
-          <ShoppingBag className="w-4 h-4" />
           <span>{isSelected ? "প্যাকেজটি সিলেক্ট করা আছে" : "এই প্যাকেজটি সিলেক্ট করুন"}</span>
         </button>
 

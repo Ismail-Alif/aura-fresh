@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ShoppingBag, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface MobileBottomBarProps {
   onOrderClick: () => void;
@@ -31,13 +31,12 @@ export const MobileBottomBar: React.FC<MobileBottomBarProps> = ({ onOrderClick }
       <div className="flex items-center gap-2">
         <div className="flex-1 pl-1">
           <div className="text-[11px] text-slate-500 font-semibold leading-tight">অরাফ্রেশ এয়ার পিউরিফায়ার</div>
-          <div className="text-xs font-black text-emerald-800">শুরু মাত্র ৳৩৯০ থেকে</div>
+          <div className="text-xs font-black text-emerald-800">ধামাকা অফারে মাত্র ৳৯৯৯</div>
         </div>
         <button
           onClick={onOrderClick}
-          className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 active:from-emerald-700 active:to-teal-700 text-white font-black text-xs py-2.5 px-3 rounded-xl shadow-md flex items-center justify-center gap-1.5"
+          className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 active:from-emerald-700 active:to-teal-700 text-white font-black text-xs py-2.5 px-3 rounded-xl shadow-md flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer"
         >
-          <ShoppingBag className="w-3.5 h-3.5" />
           <span>অর্ডার করুন (COD)</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>

@@ -19,8 +19,8 @@ import { trackInitiateCheckout } from "@/lib/metaPixel";
 import { Tag } from "lucide-react";
 
 export default function Home() {
-  // Default selected package: Pro Multi-Room (500g)
-  const [selectedPackage, setSelectedPackage] = useState<ProductPackage>(SITE_CONFIG.products[1]);
+  // Default selected package: Pro Multi-Room (500g) - ৳999
+  const [selectedPackage, setSelectedPackage] = useState<ProductPackage>(SITE_CONFIG.products[0]);
   const [placedOrder, setPlacedOrder] = useState<OrderDetails | null>(null);
 
   const scrollToCheckout = () => {

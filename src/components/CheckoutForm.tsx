@@ -2,11 +2,10 @@
 
 import React, { useState } from "react";
 import { ProductPackage, SITE_CONFIG, OrderDetails } from "@/config/site";
-import { ShoppingCart, MessageCircle, AlertCircle, Sparkles } from "lucide-react";
+import { AlertCircle, Sparkles, CheckCircle2 } from "lucide-react";
 import {
   trackInitiateCheckout,
   trackPurchase,
-  trackContact,
   validateBdPhone,
 } from "@/lib/metaPixel";
 
@@ -26,18 +25,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Calculate pricing
+  // Calculate pricing with 100% Free Nationwide Delivery
   const subtotal = selectedPackage.price * quantity;
-  
-  // Shipping calculation
-  const isFreeDelivery = selectedPackage.freeShipping || quantity >= SITE_CONFIG.shipping.freeDeliveryThresholdQty;
-  const deliveryCharge = isFreeDelivery
-    ? 0
-    : deliveryArea === "insideDhaka"
-    ? SITE_CONFIG.shipping.insideDhaka
-    : SITE_CONFIG.shipping.outsideDhaka;
-
-  const grandTotal = subtotal + deliveryCharge;
+  const deliveryCharge = 0;
+  const grandTotal = subtotal;
 
   // Dedicated CAPI Phone Enrichment (Matches Vocab Joy)
   const handlePhoneBlur = () => {
@@ -137,14 +128,6 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
     }
   };
 
-  const handleWhatsAppOrder = () => {
-    trackContact("whatsapp");
-    const text = encodeURIComponent(
-      `আসসালামু আলাইকুম, আমি ${SITE_CONFIG.brandNameBn} অর্ডার করতে চাই:\n\nপ্যাকেজ: ${selectedPackage.bnTitle}\nপরিমাণ: ${quantity} টি\nমূল্য: ৳${grandTotal}\nনাম: ${customerName || "..."}\nমোবাইল: ${customerPhone || "..."}\nঠিকানা: ${customerAddress || "..."}`
-    );
-    window.open(`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${text}`, "_blank");
-  };
-
   return (
     <section id="checkout" className="py-16 sm:py-24 bg-gradient-to-b from-white via-slate-50 to-emerald-50/20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
@@ -153,13 +136,13 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
         <div className="text-center space-y-3 mb-10">
           <div className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-xs sm:text-sm font-bold px-3 py-1 rounded-full">
             <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span>সহজ অর্ডারিং প্রক্রিয়া</span>
+            <span>সহজ ও নিরাপদ অর্ডারিং</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
             ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">
-            নিচের ফর্মে আপনার ডেলিভারি তথ্য দিন। কোনো অগ্রিম পেমেন্ট ছাড়াই সারা দেশে পণ্য দেখে মূল্য পরিশোধ করার সুবিধা।
+            নিচের ফর্মে আপনার ডেলিভারি তথ্য দিন। কোনো অগ্রিম টাকা ছাড়াই সারাদেশে পণ্য হাতে পেয়ে দেখে মূল্য পরিশোধের সুবিধা।
           </p>
         </div>
 
@@ -197,12 +180,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
               <div>
                 <div className="text-sm font-bold text-slate-900">প্যাকেজের সংখ্যা (Quantity)</div>
-                <div className="text-xs text-slate-500">
-                  {quantity >= 2 ? (
-                    <span className="text-emerald-700 font-bold">🎉 আপনি ফ্রি হোম ডেলিভারি পাচ্ছেন!</span>
-                  ) : (
-                    <span>২ বা ততোধিক বক্স নিলে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি!</span>
-                  )}
+                <div className="text-xs text-emerald-700 font-bold mt-0.5 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>সারাদেশে হোম ডেলিভারি সম্পূর্ণ ফ্রি!</span>
                 </div>
               </div>
 
@@ -252,7 +232,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                  মোবাইল নম্বর *
+                  আপনার মোবাইল নম্বর *
                 </label>
                 <input
                   type="tel"
@@ -267,7 +247,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
               </div>
             </div>
 
-            {/* Delivery Area Selection */}
+            {/* Delivery Area Selection (Both Free) */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
                 ডেলিভারি এলাকা নির্বাচন করুন *
@@ -290,8 +270,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
                     />
                     <span className="text-xs sm:text-sm font-bold text-slate-800">ঢাকা সিটির ভেতরে</span>
                   </div>
-                  <span className="text-xs font-bold text-emerald-700">
-                    {isFreeDelivery ? "ফ্রি" : `৳${SITE_CONFIG.shipping.insideDhaka}`}
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">
+                    ফ্রি ডেলিভারি
                   </span>
                 </label>
 
@@ -312,8 +292,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
                     />
                     <span className="text-xs sm:text-sm font-bold text-slate-800">ঢাকার বাইরে (সারাদেশে)</span>
                   </div>
-                  <span className="text-xs font-bold text-emerald-700">
-                    {isFreeDelivery ? "ফ্রি" : `৳${SITE_CONFIG.shipping.outsideDhaka}`}
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">
+                    ফ্রি ডেলিভারি
                   </span>
                 </label>
               </div>
@@ -386,7 +366,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
               {paymentMethod === "bkash" && (
                 <div className="mt-3 p-4 rounded-xl bg-pink-50/80 border border-pink-200 text-xs space-y-2">
                   <div className="font-bold text-pink-900">
-                    এই নম্বরে সেন্ড মানি করুন: <span className="text-pink-700 font-mono text-sm">{SITE_CONFIG.bkashNumber}</span> ({SITE_CONFIG.bkashType})
+                    বিকাশ নম্বর: <span className="text-pink-700 font-mono text-sm">{SITE_CONFIG.bkashNumber}</span> ({SITE_CONFIG.bkashType})
                   </div>
                   <input
                     type="text"
@@ -403,51 +383,31 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
             {/* Pricing Summary Box */}
             <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 space-y-2 text-xs sm:text-sm">
               <div className="flex justify-between text-slate-600">
-                <span>প্যাকেজ সাবটোটাল ({quantity} টি):</span>
+                <span>প্যাকেজ মূল্য ({quantity} টি):</span>
                 <span className="font-bold text-slate-900">৳{subtotal}</span>
               </div>
               <div className="flex justify-between text-slate-600">
                 <span>ডেলিভারি চার্জ:</span>
-                <span className="font-bold text-slate-900">
-                  {deliveryCharge === 0 ? (
-                    <span className="text-emerald-700">ফ্রি (৳০)</span>
-                  ) : (
-                    `৳${deliveryCharge}`
-                  )}
-                </span>
+                <span className="font-bold text-emerald-700">ফ্রি (৳০)</span>
               </div>
-              {isFreeDelivery && (
-                <div className="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-2.5 py-1 rounded-md">
-                  ✨ ডেলিভারি চার্জ সম্পূর্ণ ফ্রি হয়েছে!
-                </div>
-              )}
+              <div className="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>আজকের স্পেশাল অফারে সারাদেশে হোম ডেলিভারি সম্পূর্ণ ফ্রি!</span>
+              </div>
               <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-base sm:text-lg font-black text-slate-900">
-                <span>সর্বমোট প্রদেয়:</span>
+                <span>সর্বমোট প্রদেয় বিল:</span>
                 <span className="text-emerald-700">৳{grandTotal}</span>
               </div>
             </div>
 
-            {/* Submit Order Button */}
+            {/* Submit Order Button (No icon to avoid line breaking) */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white font-black text-base sm:text-lg py-4 rounded-2xl shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/40 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-3 cursor-pointer"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white font-black text-base sm:text-lg py-4 px-4 rounded-2xl shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/40 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center cursor-pointer whitespace-nowrap"
             >
-              <ShoppingCart className="w-5 h-5" />
               <span>{isSubmitting ? "অর্ডার প্রসেস হচ্ছে..." : `অর্ডার কনফার্ম করুন • ৳${grandTotal}`}</span>
             </button>
-
-            {/* Alternative WhatsApp Order Option */}
-            <div className="text-center pt-2">
-              <button
-                type="button"
-                onClick={handleWhatsAppOrder}
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-emerald-800 hover:text-emerald-950 transition-colors"
-              >
-                <MessageCircle className="w-4 h-4 text-emerald-600" />
-                <span>ফর্ম পূরণ করতে ঝামেলা মনে হলে সরাসরি হোয়াটসঅ্যাপে অর্ডার করুন</span>
-              </button>
-            </div>
 
           </form>
 
