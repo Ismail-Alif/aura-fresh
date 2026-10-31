@@ -9,7 +9,9 @@ interface MetaPixelTrackerProps {
 }
 
 export const MetaPixelTracker: React.FC<MetaPixelTrackerProps> = ({
-  pixelId = process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID || process.env.NEXT_PUBLIC_FB_PIXEL_ID,
+  pixelId = process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID ||
+    process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
+    "1162023116505358",
 }) => {
   useEffect(() => {
     // Fire deduplicated PageView on mount

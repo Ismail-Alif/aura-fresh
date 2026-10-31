@@ -73,7 +73,8 @@ export async function POST(req: Request) {
 
     const pixelId =
       process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID ||
-      process.env.NEXT_PUBLIC_FB_PIXEL_ID;
+      process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
+      "1162023116505358";
     const accessToken =
       process.env.AURAFRESH_CAPI_TOKEN || process.env.FB_CAPI_TOKEN;
 
