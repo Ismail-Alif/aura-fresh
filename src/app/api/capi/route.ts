@@ -76,7 +76,9 @@ export async function POST(req: Request) {
       process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
       "1162023116505358";
     const accessToken =
-      process.env.AURAFRESH_CAPI_TOKEN || process.env.FB_CAPI_TOKEN;
+      process.env.AURAFRESH_CAPI_TOKEN ||
+      process.env.FB_CAPI_TOKEN ||
+      "EAAVJ1Tj8PswBS0XSdi6ZCUMkwmIJujWSXWXXAWwgNJaZATSEX032UDvxMNC78VdulWxzq205C1aIDPPZCWnt3weZAFOtj09rHWlutASwYBDZC4etqZCSIoZAuDFKHGihNcZCLy04VG8xHQuG2KYSXMjpKEcpTxQYYlTm1UYGtYKS4lXao8zjKhZBgq2fyHklmSI93MQZDZD";
 
     // If pixel or CAPI token is not configured yet in .env, gracefully acknowledge without error
     if (!pixelId || !accessToken) {
