@@ -93,11 +93,11 @@ export async function POST(req: Request) {
     const pixelId =
       process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID ||
       process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
-      "1162023116505358";
+      "1950481669694178";
     const accessToken =
       process.env.AURAFRESH_CAPI_TOKEN ||
       process.env.FB_CAPI_TOKEN ||
-      "EAAVJ1Tj8PswBS0XSdi6ZCUMkwmIJujWSXWXXAWwgNJaZATSEX032UDvxMNC78VdulWxzq205C1aIDPPZCWnt3weZAFOtj09rHWlutASwYBDZC4etqZCSIoZAuDFKHGihNcZCLy04VG8xHQuG2KYSXMjpKEcpTxQYYlTm1UYGtYKS4lXao8zjKhZBgq2fyHklmSI93MQZDZD";
+      "EAAVJ1Tj8PswBSZBGf6MTk1mCYUrvr8suzVE0kiXxaSb40DLHZCpTofFctKTqu0sdZCTKpZAcds6H2JeGK1vrExEXxcRB7XxRp3VkFTAYbdRPmBAPMi2YrioN6QpI9ZCjhOpv6m4uYqmHvAKsDR8avQfFAMZCqU8KE7NfcdxZAFVD3GXOWn5jYZAJaVzsx26mbLBkcwZDZD";
 
     if (!pixelId || !accessToken) {
       console.log(`[CAPI Info] Event ${eventName} received (Pixel/Token not set in env yet).`);

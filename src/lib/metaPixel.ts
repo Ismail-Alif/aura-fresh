@@ -4,7 +4,7 @@
 export const FB_PIXEL_ID =
   process.env.NEXT_PUBLIC_AURAFRESH_PIXEL_ID ||
   process.env.NEXT_PUBLIC_FB_PIXEL_ID ||
-  "1162023116505358";
+  "1950481669694178";
 
 declare global {
   interface Window {
