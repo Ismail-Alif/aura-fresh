@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import crypto from "crypto";
 
 const __name = (n?: string | null) => {
@@ -50,7 +51,13 @@ const ALLOWED_EVENTS = new Set([
   "Contact",
 ]);
 
-const ALLOWED_ROOT_DOMAINS = ["aurafreshbd.com", "aurafresh.com", "aerocure.com"];
+const ALLOWED_ROOT_DOMAINS = [
+  "aurafreshbd.vercel.app",
+  "vercel.app",
+  "aurafreshbd.com",
+  "aurafresh.com",
+  "aerocure.com",
+];
 
 const isValidAuraFreshUrl = (urlStr?: string | null): boolean => {
   if (!urlStr || typeof urlStr !== "string") return false;
@@ -60,7 +67,8 @@ const isValidAuraFreshUrl = (urlStr?: string | null): boolean => {
     const isDevHost = host === "localhost" || host === "127.0.0.1";
     const allowed =
       ALLOWED_ROOT_DOMAINS.some((d) => host === d || host.endsWith(`.${d}`)) ||
-      (isDevHost && process.env.NODE_ENV !== "production");
+      host.endsWith(".vercel.app") ||
+      isDevHost;
     return (parsed.protocol === "http:" || parsed.protocol === "https:") && allowed;
   } catch {
     return false;
@@ -76,6 +84,7 @@ export async function POST(req: Request) {
       eventUrl,
       fbc,
       fbp,
+      externalId,
       eventData,
       name,
       phone,
@@ -112,13 +121,20 @@ export async function POST(req: Request) {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("remote-addr");
     const userAgent = req.headers.get("user-agent") || "";
 
+    // Read server cookies if client didn't supply them
+    const cookieStore = await cookies();
+    const serverFbp = cookieStore.get("_fbp")?.value || null;
+    const serverFbc = cookieStore.get("_fbc")?.value || null;
+    const resolvedFbp = (fbp && fbp !== "null" ? fbp : serverFbp) || null;
+    const resolvedFbc = (fbc && fbc !== "null" ? fbc : serverFbc) || null;
+
     const { fn, ln } = __name(name);
     const phn = __phone(phone);
 
     const referer = req.headers.get("referer");
     const sourceUrl =
       [eventUrl, referer].find((candidate) => isValidAuraFreshUrl(candidate)) ||
-      "https://aurafreshbd.com";
+      "https://aurafreshbd.vercel.app";
 
     const payload: Record<string, unknown> = {
       data: [
@@ -134,8 +150,9 @@ export async function POST(req: Request) {
             ...(ln && { ln: [hash(ln)] }),
             ...(ip && { client_ip_address: ip }),
             ...(userAgent && { client_user_agent: userAgent }),
-            ...(fbp && fbp !== "null" && { fbp }),
-            ...(fbc && fbc !== "null" && { fbc }),
+            ...(resolvedFbp && { fbp: resolvedFbp }),
+            ...(resolvedFbc && { fbc: resolvedFbc }),
+            ...(externalId && { external_id: [hash(externalId)] }),
             country: [hash(address?.country || "bd")],
             ...(address?.city && { ct: [hash(address.city)] }),
             ...(address?.zipCode && { zp: [hash(address.zipCode)] }),

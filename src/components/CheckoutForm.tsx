@@ -33,6 +33,21 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
     const val = e.target.value.replace(/[০-৯]/g, (d) => String("০১২৩৪৫৬৭৮৯".indexOf(d)));
     setCustomerPhone(val);
     if (errorMsg) setErrorMsg("");
+
+    // Real-time InitiateCheckout CAPI phone enrichment when 11 digits are typed
+    if (val.length === 11) {
+      const pVal = validateBdPhone(val);
+      if (pVal.ok) {
+        trackInitiateCheckout({
+          product: selectedPackage,
+          source: "phone_input_realtime",
+          extraUserData: {
+            phone: pVal.phone,
+            name: customerName.trim() || undefined,
+          },
+        });
+      }
+    }
   };
 
   // Dedicated CAPI Phone Enrichment on Blur (EMQ 9.5+)
@@ -47,6 +62,22 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
           name: customerName.trim() || undefined,
         },
       });
+    }
+  };
+
+  const handleNameBlur = () => {
+    if (customerName.trim() && customerPhone.trim()) {
+      const val = validateBdPhone(customerPhone);
+      if (val.ok) {
+        trackInitiateCheckout({
+          product: selectedPackage,
+          source: "name_blur_enrichment",
+          extraUserData: {
+            phone: val.phone,
+            name: customerName.trim(),
+          },
+        });
+      }
     }
   };
 
@@ -221,6 +252,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ selectedPackage, onO
                 placeholder="যেমন: মোঃ কামরুল ইসলাম"
                 value={customerName}
                 onFocus={() => trackInitiateCheckout({ product: selectedPackage, source: "form_name_focus" })}
+                onBlur={handleNameBlur}
                 onChange={(e) => {
                   setCustomerName(e.target.value);
                   if (errorMsg) setErrorMsg("");
