@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { verifyAdminCredentials, createAdminToken, COOKIE_NAME } from "@/lib/adminAuth";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    let body: any = {};
+    try {
+      body = await request.json();
+    } catch {
+      body = {};
+    }
     const { email, password } = body;
 
     if (!verifyAdminCredentials(email, password)) {
@@ -41,9 +49,10 @@ export async function POST(request: Request) {
     return response;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Server error";
-    console.error("[AUTH] Login error:", message);
+    const stack = error instanceof Error ? error.stack : undefined;
+    console.error("[AUTH] Login error:", message, stack);
     return NextResponse.json(
-      { success: false, message: "Server error occurred during sign in." },
+      { success: false, message, detail: String(error) },
       { status: 500 }
     );
   }

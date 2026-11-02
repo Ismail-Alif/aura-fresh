@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/adminAuth";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 const BACKEND_BASE_URL =
   process.env.BACKEND_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
