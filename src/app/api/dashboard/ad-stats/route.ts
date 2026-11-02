@@ -9,8 +9,8 @@ const BACKEND_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://api.vocabjoy.com";
 
-export async function GET() {
-  const admin = await getCurrentAdmin();
+export async function GET(request: Request) {
+  const admin = await getCurrentAdmin(request);
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -4,8 +4,8 @@ import { getCurrentAdmin } from "@/lib/adminAuth";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function GET() {
-  const user = await getCurrentAdmin();
+export async function GET(request: Request) {
+  const user = await getCurrentAdmin(request);
 
   if (!user) {
     return NextResponse.json({ authenticated: false }, { status: 401 });

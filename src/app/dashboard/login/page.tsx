@@ -13,8 +13,12 @@ export default function DashboardLoginPage() {
   const [authError, setAuthError] = useState("");
 
   useEffect(() => {
-    // Check if already authenticated
-    fetch("/api/auth/me")
+    // Check if already authenticated via cookie or token
+    const token = typeof window !== "undefined" ? localStorage.getItem("aurafresh_admin_token") : null;
+    const headers: Record<string, string> = {};
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+    fetch("/api/auth/me", { headers })
       .then((res) => {
         if (res.ok) {
           router.replace("/dashboard");
@@ -45,6 +49,9 @@ export default function DashboardLoginPage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        if (typeof window !== "undefined" && data.token) {
+          localStorage.setItem("aurafresh_admin_token", data.token);
+        }
         router.push("/dashboard");
       } else {
         setAuthError(data.message || "Invalid credentials. Please check your password.");

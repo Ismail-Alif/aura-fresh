@@ -38,3 +38,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated marketing banners & proofs
+/public/aurafresh_ad_banner*
+/public/aero_font_*
+/public/bengali_ad_fonts*
+/public/lipighor_specimen*
+/public/activated_alumina_balls.jpg
+/public/kmno4_*.jpg
+/public/mobile_screenshot.jpg
+/public/aurafresh_ad_thumbnail.jpg

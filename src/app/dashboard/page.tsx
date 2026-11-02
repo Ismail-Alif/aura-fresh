@@ -232,9 +232,15 @@ export default function DashboardPage() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
+  const getAuthHeaders = (): Record<string, string> => {
+    if (typeof window === "undefined") return {};
+    const t = localStorage.getItem("aurafresh_admin_token");
+    return t ? { Authorization: `Bearer ${t}` } : {};
+  };
+
   // 1. Verify Authentication
   useEffect(() => {
-    fetch("/api/auth/me")
+    fetch("/api/auth/me", { headers: getAuthHeaders() })
       .then((res) => {
         if (!res.ok) {
           router.replace("/dashboard/login");
@@ -270,7 +276,9 @@ export default function DashboardPage() {
       params.append("page", String(page));
       params.append("limit", String(limit));
 
-      const res = await fetch(`/api/dashboard/orders?${params.toString()}`);
+      const res = await fetch(`/api/dashboard/orders?${params.toString()}`, {
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         const data = await res.json();
         setOrders(data.orders || []);
@@ -302,7 +310,7 @@ export default function DashboardPage() {
   // Fetch Settings on mount
   useEffect(() => {
     if (!authLoading) {
-      fetch("/api/dashboard/settings")
+      fetch("/api/dashboard/settings", { headers: getAuthHeaders() })
         .then((res) => res.json())
         .then((data) => {
           if (data && typeof data.autoCourier === "boolean") {
@@ -319,7 +327,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch("/api/dashboard/orders", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify({ id, status: newStatus }),
       });
       const data = await res.json();
@@ -344,6 +352,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`/api/dashboard/orders/${id}/confirm-phone`, {
         method: "POST",
+        headers: getAuthHeaders(),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -367,6 +376,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`/api/dashboard/orders/${id}/retry-courier`, {
         method: "POST",
+        headers: getAuthHeaders(),
       });
       const data = await res.json();
       if (res.ok && data.consignmentId) {
@@ -398,6 +408,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`/api/dashboard/orders/${id}/retry-capi`, {
         method: "POST",
+        headers: getAuthHeaders(),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -424,6 +435,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`/api/dashboard/orders/${id}/archive`, {
         method: "POST",
+        headers: getAuthHeaders(),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -446,7 +458,9 @@ export default function DashboardPage() {
     if (!phone) return;
     setFraudLoadingPhones((prev) => ({ ...prev, [phone]: true }));
     try {
-      const res = await fetch(`/api/dashboard/fraud-check/${encodeURIComponent(phone)}`);
+      const res = await fetch(`/api/dashboard/fraud-check/${encodeURIComponent(phone)}`, {
+        headers: getAuthHeaders(),
+      });
       const data = await res.json();
       if (res.ok && data.success) {
         setFraudStatsMap((prev) => ({ ...prev, [phone]: data }));
@@ -469,7 +483,10 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("aurafresh_admin_token");
+      }
+      await fetch("/api/auth/logout", { method: "POST", headers: getAuthHeaders() });
     } finally {
       router.push("/dashboard/login");
     }
@@ -480,7 +497,7 @@ export default function DashboardPage() {
     try {
       const res = await fetch("/api/dashboard/settings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeaders() },
         body: JSON.stringify(systemSettings),
       });
       if (res.ok) {
@@ -500,7 +517,7 @@ export default function DashboardPage() {
     setShowAdStatsModal(true);
     setLoadingAdStats(true);
     try {
-      const res = await fetch("/api/dashboard/ad-stats");
+      const res = await fetch("/api/dashboard/ad-stats", { headers: getAuthHeaders() });
       const data = await res.json();
       setAdStatsData(data);
     } catch {

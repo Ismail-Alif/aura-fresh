@@ -6,15 +6,15 @@ export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   try {
-    let body: any = {};
+    let body: { email?: string; password?: string } = {};
     try {
-      body = await request.json();
+      body = (await request.json()) as { email?: string; password?: string };
     } catch {
       body = {};
     }
     const { email, password } = body;
 
-    if (!verifyAdminCredentials(email, password)) {
+    if (!email || !password || !verifyAdminCredentials(email, password)) {
       return NextResponse.json(
         { success: false, message: "Invalid email or password." },
         { status: 401 }

@@ -64,8 +64,23 @@ export function verifyAdminToken(token?: string | null): AdminUser | null {
   }
 }
 
-export async function getCurrentAdmin(): Promise<AdminUser | null> {
-  const cookieStore = cookies();
-  const token = cookieStore.get(COOKIE_NAME)?.value;
-  return verifyAdminToken(token);
+export async function getCurrentAdmin(request?: Request): Promise<AdminUser | null> {
+  // 1. Check Authorization Header if request passed
+  if (request) {
+    const authHeader = request.headers.get("authorization");
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const headerToken = authHeader.substring(7).trim();
+      const user = verifyAdminToken(headerToken);
+      if (user) return user;
+    }
+  }
+
+  // 2. Check Cookie
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get(COOKIE_NAME)?.value;
+    return verifyAdminToken(token);
+  } catch {
+    return null;
+  }
 }

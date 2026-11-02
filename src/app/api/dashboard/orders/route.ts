@@ -10,7 +10,7 @@ const BACKEND_BASE_URL =
   "https://api.vocabjoy.com";
 
 export async function GET(request: Request) {
-  const admin = await getCurrentAdmin();
+  const admin = await getCurrentAdmin(request);
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  const admin = await getCurrentAdmin();
+  const admin = await getCurrentAdmin(request);
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -16,7 +16,7 @@ interface Params {
 }
 
 export async function GET(request: Request, { params }: Params) {
-  const admin = await getCurrentAdmin();
+  const admin = await getCurrentAdmin(request);
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
