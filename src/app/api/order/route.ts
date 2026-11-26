@@ -39,12 +39,12 @@ export async function POST(request: Request) {
           deliveryCharge: orderData.deliveryCharge,
           totalAmount: orderData.grandTotal,
           paymentMethod: orderData.paymentMethod || "COD",
-          source: "aurafreshbd.vercel.app",
+          source: "fresh.aervobd.com",
           ipAddress: ip,
           userAgent: userAgent,
           attribution: {
             referer,
-            landing_page: "https://aurafreshbd.vercel.app",
+            landing_page: "https://fresh.aervobd.com",
           },
         }),
       });

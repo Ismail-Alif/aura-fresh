@@ -135,7 +135,7 @@ export async function POST(req: Request) {
     const referer = req.headers.get("referer");
     const sourceUrl =
       [eventUrl, referer].find((candidate) => isValidAuraFreshUrl(candidate)) ||
-      "https://aurafreshbd.vercel.app";
+      "https://fresh.aervobd.com";
 
     const payload: Record<string, unknown> = {
       data: [

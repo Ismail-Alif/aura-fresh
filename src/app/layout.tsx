@@ -4,6 +4,7 @@ import { SITE_CONFIG } from "@/config/site";
 import { MetaPixelTracker } from "@/components/MetaPixelTracker";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fresh.aervobd.com"),
   title: `${SITE_CONFIG.brandName} (${SITE_CONFIG.brandNameBn}) | ১০০% প্রাকৃতিক দুর্গন্ধ শোষক ও এয়ার পিউরিফায়ার`,
   description: "অ্যাক্টিভেটেড কার্বন ও পটাশিয়াম পারম্যাঙ্গানেট প্রযুক্তিতে তৈরি শক্তিশালী দুর্গন্ধ শোষক। ঘরের স্যাঁতসেঁতে আর্দ্রতা, জুতা, রান্নাঘর ও বাথরুমের দুর্গন্ধ দূর করুন স্থায়ীভাবে।",
   keywords: [
