@@ -13,8 +13,8 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick, onExploreScience }) =>
   return (
     <section id="hero" className="relative overflow-hidden pt-6 pb-12 sm:pt-14 sm:pb-20 bg-gradient-to-b from-emerald-50/40 via-slate-50/60 to-white">
       {/* Decorative Glow Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[340px] sm:w-[600px] h-[300px] sm:h-[400px] bg-emerald-300/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      <div className="absolute top-32 right-2 w-[200px] sm:w-[320px] h-[200px] sm:h-[320px] bg-purple-300/15 rounded-full blur-2xl -z-10 pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[340px] sm:w-[600px] h-[300px] sm:h-[400px] bg-emerald-300/15 rounded-full blur-2xl transform-gpu -z-10 pointer-events-none"></div>
+      <div className="absolute top-32 right-2 w-[200px] sm:w-[320px] h-[200px] sm:h-[320px] bg-purple-300/10 rounded-full blur-xl transform-gpu -z-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onOrderClick, onExploreScience }) =>
             
             {/* Top Pill */}
             <div className="inline-flex items-center gap-2 bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-700 animate-spin" />
+              <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
               <span>কার্বন + পটাশিয়াম পারম্যাঙ্গানেট ডুয়াল বৈজ্ঞানিক ফর্মুলা</span>
             </div>
 

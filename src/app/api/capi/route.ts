@@ -52,6 +52,7 @@ const ALLOWED_EVENTS = new Set([
 ]);
 
 const ALLOWED_ROOT_DOMAINS = [
+  "aervobd.com",
   "aurafreshbd.vercel.app",
   "vercel.app",
   "aurafreshbd.com",

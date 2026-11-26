@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOrderClick }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all w-full">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs transition-all w-full transform-gpu">
       {/* ================= 1. TOP ANNOUNCEMENT BAR (Matching Vocab Joy) ================= */}
       <div className="bg-slate-950 text-white py-2 px-3 sm:px-4 text-[11px] sm:text-xs font-medium border-b border-slate-800 w-full shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
